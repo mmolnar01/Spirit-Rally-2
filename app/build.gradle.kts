@@ -2,11 +2,14 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.navigation.safeargs)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
     namespace = "hu.klm60o.android.spiritrally2"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "hu.klm60o.android.spiritrally2"
@@ -56,4 +59,27 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    //Firebase Bom
+    implementation(platform(libs.firebase.bom))
+
+    //Firebase Analytics
+    implementation(libs.firebase.analytics)
+
+    //Firebase Auth
+    implementation(libs.firebase.auth)
+
+    //Firebase Firestore
+    implementation(libs.firebase.firestore)
+
+    //OpenSteetMap
+    implementation(libs.osm.main)
+    implementation(libs.osm.compose)
+
+    //GPX Parser
+    implementation(libs.gpx.parser)
+
+    //Zxing
+    implementation(libs.zxing.journey)
+    implementation(libs.zxing.google)
 }
