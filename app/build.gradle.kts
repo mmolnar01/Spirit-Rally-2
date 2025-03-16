@@ -82,4 +82,14 @@ dependencies {
     //Zxing
     implementation(libs.zxing.journey)
     implementation(libs.zxing.google)
+
+    //KotlinX Serialization JSON
+    implementation(libs.kotlinx.serialization.json)
+
+    //Compose Navigation
+    implementation(libs.navigation.compose)
+    implementation(libs.navigation.fragment)
+    implementation(libs.navigation.ui)
+    implementation(libs.navigation.dynamic.features.fragment)
+    androidTestImplementation(libs.navigation.testing)
 }
