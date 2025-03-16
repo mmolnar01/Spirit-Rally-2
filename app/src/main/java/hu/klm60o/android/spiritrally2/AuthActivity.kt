@@ -17,6 +17,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import hu.klm60o.android.spiritrally2.screens.LoginScreenComposable
+import hu.klm60o.android.spiritrally2.screens.RegisterScreenComposable
 import hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme
 import kotlinx.serialization.Serializable
 
@@ -33,13 +35,17 @@ class AuthActivity : ComponentActivity() {
                         Surface(
                             modifier = Modifier.fillMaxSize(),
                             color = MaterialTheme.colorScheme.background
-                        ) {  }
+                        ) {
+                            LoginScreenComposable(navController = navController)
+                        }
                     }
                     composable<RegisterScreen> {
                         Surface(
                             modifier = Modifier.fillMaxSize(),
                             color = MaterialTheme.colorScheme.background
-                        ) {  }
+                        ) {
+                            RegisterScreenComposable(navController = navController)
+                        }
                     }
                 }
 

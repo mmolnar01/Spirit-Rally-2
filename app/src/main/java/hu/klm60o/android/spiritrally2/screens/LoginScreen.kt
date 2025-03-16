@@ -1,5 +1,7 @@
 package hu.klm60o.android.spiritrally2.screens
 
+import android.content.Intent
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -37,9 +39,16 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import hu.klm60o.android.spiritrally2.MainActivity
+import hu.klm60o.android.spiritrally2.assets.ErrorIcon
+import hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme
+import hu.klm60o.android.spiritrally2.useful.loginUSer
 import hu.klm60o.android.spiritrally2.useful.showToast
 import hu.klm60o.android.spiritrally2.useful.validateEmail
 import hu.klm60o.android.spiritrally2.useful.validatePassword
+import hu.klm60o.android.spiritrally2.R
+import hu.klm60o.android.spiritrally2.RegisterScreen
+import hu.klm60o.android.spiritrally2.useful.findActivity
 
 @Composable
 fun LoginScreenComposable(navController: NavController) {
@@ -147,92 +156,23 @@ fun LoginScreenComposable(navController: NavController) {
             //Bejelentkezés gomb
             ElevatedButton(onClick = {
                 if(validEmail && validPassword) {
-                    viewModel.loginUSer(userEmail.value, userPassword.value) { error ->
+                    loginUSer(userEmail.value, userPassword.value) { error ->
                         if(error == null) {
                             val currentUser = Firebase.auth.currentUser
                             if(currentUser?.isEmailVerified == true) {
                                 //Lekérdezzük a bejlentkezett felhasználó eredményeit
                                 //viewModel.teamName = currentUser.displayName
-                                viewModel.getUserDataFromFirestore(currentUser, context)
+                                //viewModel.getUserDataFromFirestore(currentUser, context)
 
-                                newsViewModel.getNews()
+                                //newsViewModel.getNews()
 
-                                navController.navigate(NewsScreen) {
+                                context.startActivity(Intent(context, MainActivity::class.java))
+                                /*BackHandler {
+                                    context.findActivity()?.finish()
+                                }*/
+                                /*navController.navigate(NewsScreen) {
                                     popUpTo(navController.graph.id) {
                                         inclusive = true
-                                    }
-                                }
-                                /*val userDocumentReference = Firebase.firestore.collection("race_results").document(currentUser.uid)
-                                    .collection("my_race_results").document("my_race_results_current")
-
-                                userDocumentReference.get().addOnCompleteListener { task ->
-                                    if (task.isSuccessful) {
-                                        val document = task.result
-
-                                        //Ha létezik a dokumentum, akkor beállítjuk a viewModel mezőit és megyünk a NewsScreen-re
-                                        if (document.exists()) {
-                                            val userRaceData = document.toObject(UserViewModel::class.java)
-                                            viewModel.distance = userRaceData?.distance
-                                            viewModel.racePoints = userRaceData?.racePoints
-                                            viewModel.teamName = userRaceData?.teamName
-                                            viewModel.achievedRacePoints = userRaceData!!.achievedRacePoints
-                                            showToast(context, "Sikeres bejelentkezés!")
-                                            navController.navigate(NewsScreen) {
-                                                popUpTo(navController.graph.id) {
-                                                    inclusive = true
-                                                }
-                                            }
-
-                                            //Ha nem létezik a dokumentum, akkor letöltjük a verseny részleteit, és létrehozzuk a dokumentumot
-                                        } else {
-                                            var currentRaceData: CurrentRaceData?
-                                            Firebase.firestore.collection("race_data").document("current_race_data_test").get()
-                                                .addOnCompleteListener { task ->
-                                                    if(task.isSuccessful) {
-                                                        val raceDocument = task.result
-                                                        //Ha sikerül és létezik, betöltjük a viewModel-be és megyünk a NewsScreen-re
-                                                        if(raceDocument.exists()) {
-                                                            currentRaceData = raceDocument.toObject(CurrentRaceData::class.java)
-
-                                                            viewModel.distance = currentRaceData?.distance
-                                                            val racePoints = mutableListOf<RacePoint>()
-
-                                                            racePoints.add(RacePoint(1, currentRaceData?.start_point, null))
-
-                                                            var i = 2
-                                                            for (geoPoint in currentRaceData?.intermediate_points!!) {
-                                                                racePoints.add(RacePoint(i, geoPoint, null))
-                                                                i++
-                                                            }
-
-                                                            racePoints.add(RacePoint(i, currentRaceData?.end_point, null))
-
-                                                            viewModel.racePoints = racePoints
-
-                                                            viewModel.teamName = currentUser.displayName
-
-                                                            userDocumentReference.set(viewModel).addOnCompleteListener { task ->
-                                                                if (task.isSuccessful) {
-                                                                    Log.d(ContentValues.TAG, "Created user document: Success")
-                                                                    showToast(context, "A dokumentum sikeresen létrehozva")
-
-                                                                    showToast(context, "Sikeres bejelentkezés!")
-                                                                    navController.navigate(
-                                                                        NewsScreen
-                                                                    ) {
-                                                                        popUpTo(navController.graph.id) {
-                                                                            inclusive = true
-                                                                        }
-                                                                    }
-                                                                } else {
-                                                                    Log.d(ContentValues.TAG, "Created user document: Failure")
-                                                                    showToast(context, "A dokumentum létrehozása sikertelen")
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                        }
                                     }
                                 }*/
                             } else {
@@ -286,8 +226,8 @@ fun LoginScreenComposable(navController: NavController) {
 @Preview(showBackground = true)
 @Composable
 fun LoginPreview() {
-    SpiritRallyTheme {
-        hu.klm60o.android.spiritrally2.screens.LoginScreenComposable(
+    SpiritRally2Theme {
+        LoginScreenComposable(
             navController = rememberNavController()
         )
     }
@@ -296,8 +236,8 @@ fun LoginPreview() {
 @Preview(showBackground = true)
 @Composable
 fun LoginPreviewDark() {
-    hu.klm60o.spiritrally2.ui.theme.SpiritRallyTheme(darkTheme = true) {
-        hu.klm60o.android.spiritrally2.screens.LoginScreenComposable(
+    SpiritRally2Theme(darkTheme = true) {
+        LoginScreenComposable(
             navController = rememberNavController()
         )
     }
