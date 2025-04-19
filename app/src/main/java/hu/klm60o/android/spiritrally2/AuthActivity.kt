@@ -17,11 +17,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import dagger.hilt.android.AndroidEntryPoint
 import hu.klm60o.android.spiritrally2.screens.LoginScreenComposable
 import hu.klm60o.android.spiritrally2.screens.RegisterScreenComposable
 import hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme
 import kotlinx.serialization.Serializable
 
+@AndroidEntryPoint
 class AuthActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

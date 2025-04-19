@@ -22,6 +22,7 @@ object AppModule {
     fun provideRacepointsRespository(
         db: FirebaseFirestore
     ): RacepointRepository = RacepointsRepositoryImpl(
-        racepointsRef = db.collection("results").document(Firebase.auth.uid.toString()).collection("my_results")
+        racepointsRef = db.collection("results").document(Firebase.auth.uid.toString()).collection("my_results"),
+        commonRef = db.collection("data")
     )
 }

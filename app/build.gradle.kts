@@ -98,4 +98,8 @@ dependencies {
     //Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+
+    //ViewModel
+    implementation(libs.viewmodel.compose)
+    implementation(libs.hilt.viewmodel)
 }

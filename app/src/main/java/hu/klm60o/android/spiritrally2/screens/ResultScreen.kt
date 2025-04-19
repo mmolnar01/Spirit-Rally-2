@@ -20,13 +20,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.firestore.GeoPoint
+import hu.klm60o.android.spiritrally2.presentation.racepoints.RacepointsViewModel
 import java.util.Calendar
 
 @Composable
-fun ResultScreenComposable(navController: NavController) {
+fun ResultScreenComposable(navController: NavController, viewModel: RacepointsViewModel = hiltViewModel()) {
     Scaffold(bottomBar = { MyBottomAppbarComposable(navController)}) {
         innerPadding ->
         Column(verticalArrangement = Arrangement.Top,

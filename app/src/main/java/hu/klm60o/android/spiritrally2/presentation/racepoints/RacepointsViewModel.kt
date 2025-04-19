@@ -1,22 +1,19 @@
 package hu.klm60o.android.spiritrally2.presentation.racepoints
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.common.cache.LoadingCache
 import com.google.firebase.Timestamp
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import com.google.firebase.firestore.GeoPoint
-import hu.klm60o.android.spiritrally2.domain.model.Racepoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 import hu.klm60o.android.spiritrally2.domain.model.Response
 import hu.klm60o.android.spiritrally2.domain.repository.EditRacepointResponse
 import hu.klm60o.android.spiritrally2.domain.repository.RacepointRepository
 import hu.klm60o.android.spiritrally2.domain.repository.RacepointsResponse
-import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 class RacepointsViewModel @Inject constructor(
