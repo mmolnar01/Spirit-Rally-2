@@ -44,6 +44,7 @@ import hu.klm60o.android.spiritrally2.useful.validateEmail
 import hu.klm60o.android.spiritrally2.useful.validatePassword
 import hu.klm60o.android.spiritrally2.useful.validatePasswordRepeat
 import hu.klm60o.android.spiritrally2.R
+import hu.klm60o.android.spiritrally2.useful.setDisplayName
 
 @Composable
 fun RegisterScreenComposable(navController: NavController) {
@@ -216,6 +217,7 @@ fun RegisterScreenComposable(navController: NavController) {
                             showToast(context, "Sikeres regisztráció. Kérlek erősítsd meg az Email címedet!")
 
                             //viewModel.setDisplayName(userTeamName.value)
+                            setDisplayName(userTeamName.value)
 
                             Firebase.auth.currentUser?.sendEmailVerification()
                             Firebase.auth.signOut()

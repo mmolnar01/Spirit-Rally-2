@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.google.services)
     alias(libs.plugins.navigation.safeargs)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.hilt.android)
+    alias(libs.plugins.kotlin.android.ksp)
 }
 
 android {
@@ -92,4 +94,8 @@ dependencies {
     implementation(libs.navigation.ui)
     implementation(libs.navigation.dynamic.features.fragment)
     androidTestImplementation(libs.navigation.testing)
+
+    //Hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
 }

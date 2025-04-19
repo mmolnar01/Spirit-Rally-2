@@ -21,6 +21,8 @@ zxingJourney = "4.3.0"
 zxingGoogle = "3.4.1"
 kotlinxSerializationJson = "1.7.0"
 navigationCompose = "2.8.2"
+hilt = "2.51.1"
+ksp = "2.0.0-1.0.24"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -52,6 +54,8 @@ navigation-fragment = { group = "androidx.navigation", name = "navigation-fragme
 navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigationCompose"}
 navigation-dynamic-features-fragment = { group = "androidx.navigation", name = "navigation-dynamic-features-fragment", version.ref = "navigationCompose"}
 navigation-testing = { group = "androidx.navigation", name = "navigation-testing", version.ref = "navigationCompose"}
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt"}
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -60,4 +64,6 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "safeArgs" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref= "serialization"}
+hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt"}
+kotlin-android-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp"}
 
