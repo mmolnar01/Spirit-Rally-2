@@ -7,7 +7,7 @@ import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.Timestamp
 
 typealias RacepointsResponse = Response<List<Racepoint>>
-typealias EditRacepointResponse = Response<Boolean>
+typealias EditRacepointResponse = Response<Unit>
 
 interface RacepointRepository {
     fun getRacepointsFromFirestore(): Flow<RacepointsResponse>

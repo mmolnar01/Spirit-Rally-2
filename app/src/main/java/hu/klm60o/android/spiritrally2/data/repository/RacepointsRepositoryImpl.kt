@@ -86,7 +86,7 @@ class RacepointsRepositoryImpl (
                 timestamp = timestamp
             )
             racepointsRef.document(racepointId.toString()).set(racepoint).await()
-            Success(true)
+            Success(Unit)
         } catch (e: Exception) {
             Failure(e)
         }
