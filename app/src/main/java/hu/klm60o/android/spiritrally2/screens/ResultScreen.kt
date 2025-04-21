@@ -22,6 +22,7 @@ import androidx.compose.runtime.getValue
 import hu.klm60o.android.spiritrally2.components.LoadingIndicator
 import hu.klm60o.android.spiritrally2.domain.model.Response
 import hu.klm60o.android.spiritrally2.presentation.racepoints.components.EmptyRacepointListContent
+import hu.klm60o.android.spiritrally2.presentation.racepoints.components.RacepointListContent
 import hu.klm60o.android.spiritrally2.useful.showToast
 
 @Composable
@@ -39,7 +40,7 @@ fun ResultScreenComposable(navController: NavController, viewModel: RacepointsVi
                 .fillMaxWidth()
                 .padding(innerPadding)
         ) {
-            Text("Ez itt az eredmények képernyő")
+            //Text("Ez itt az eredmények képernyő")
 
             when(val racepointsResponse = racepointsResponse) {
                 is Response.Idle -> {}
@@ -48,7 +49,7 @@ fun ResultScreenComposable(navController: NavController, viewModel: RacepointsVi
                     if (racepointsList.isEmpty()) {
                         EmptyRacepointListContent(innerPadding = innerPadding)
                     } else {
-                        Text("Vannak cuccok")
+                        RacepointListContent(innerPadding = innerPadding, racepointList = racepointsList)
                     }
                 }
                 is Response.Failure -> racepointsResponse.e?.message.let { errorMessage ->
