@@ -1,5 +1,6 @@
 package hu.klm60o.android.spiritrally2
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -17,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import hu.klm60o.android.spiritrally2.screens.LoginScreenComposable
 import hu.klm60o.android.spiritrally2.screens.RegisterScreenComposable
@@ -27,6 +29,10 @@ import kotlinx.serialization.Serializable
 class AuthActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (FirebaseAuth.getInstance().currentUser != null) {
+            startActivity(Intent(this, MainActivity::class.java))
+            this.finish()
+        }
         enableEdgeToEdge()
         setContent {
             SpiritRally2Theme {

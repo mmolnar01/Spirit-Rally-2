@@ -1,5 +1,6 @@
 package hu.klm60o.android.spiritrally2.screens
 
+import android.app.Activity
 import android.content.Intent
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
@@ -167,6 +168,8 @@ fun LoginScreenComposable(navController: NavController) {
                                 //newsViewModel.getNews()
 
                                 context.startActivity(Intent(context, MainActivity::class.java))
+                                val activity = context as? Activity
+                                activity?.finish()
                                 /*BackHandler {
                                     context.findActivity()?.finish()
                                 }*/
