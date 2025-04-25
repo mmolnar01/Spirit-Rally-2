@@ -2,6 +2,7 @@ package hu.klm60o.android.spiritrally2.presentation.racepoints.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
@@ -89,7 +90,8 @@ fun RacepointCard(
 
         Column(
             modifier = Modifier
-                .padding(5.dp),
+                .padding(5.dp)
+                .fillMaxWidth(),
             horizontalAlignment = Alignment.End
         ) {
             OutlinedTextField(

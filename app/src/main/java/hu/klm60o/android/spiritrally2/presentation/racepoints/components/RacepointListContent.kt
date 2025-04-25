@@ -10,7 +10,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import hu.klm60o.android.spiritrally2.domain.model.Racepoint
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.GeoPoint
+import hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme
 
 @Composable
 fun RacepointListContent(
@@ -21,7 +28,30 @@ fun RacepointListContent(
         modifier = Modifier.fillMaxSize().padding(innerPadding)
     ) {
         items(racepointList, key = { racePoint -> racePoint.id!! }) { racePoint ->
-            Text(racePoint.id.toString())
+            RacepointCard(racePoint, racepointList.size)
         }
+        item {
+            HorizontalDivider(
+                thickness = 2.dp,
+                modifier = Modifier
+                    .padding(10.dp)
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun RacepointListContentPreview() {
+    val racePoint1 = Racepoint(1, GeoPoint(1.0, 1.0), Timestamp(100000, 50000))
+    val racePoint2 = Racepoint(2, GeoPoint(1.0, 1.0))
+    val racePoint3 = Racepoint(3, GeoPoint(1.0, 1.0))
+    val racePoint4 = Racepoint(4, GeoPoint(1.0, 1.0))
+    val racePoint5 = Racepoint(5, GeoPoint(1.0, 1.0))
+    val racePoint6 = Racepoint(6, GeoPoint(1.0, 1.0))
+    val racePoint7 = Racepoint(7, GeoPoint(1.0, 1.0))
+    val racePointsListTest: List<Racepoint> = listOf(racePoint1, racePoint2, racePoint3, racePoint4, racePoint5, racePoint6, racePoint7)
+    SpiritRally2Theme {
+        RacepointListContent(innerPadding = PaddingValues(), racePointsListTest)
     }
 }
