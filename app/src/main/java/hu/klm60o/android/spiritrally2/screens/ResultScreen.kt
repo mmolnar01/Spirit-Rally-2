@@ -49,7 +49,7 @@ fun ResultScreenComposable(navController: NavController, viewModel: RacepointsVi
         if (result.contents == null) {
             showToast(context, "Beolvasás megszakítva")
         } else {
-            
+
         }
     }
 
@@ -117,9 +117,24 @@ fun ResultScreenComposable(navController: NavController, viewModel: RacepointsVi
                         RacepointListContent(innerPadding = innerPadding, racepointList = racepointsList)
                     }
                 }
-                is Response.Failure -> racepointsResponse.e?.message.let { errorMessage ->
+                is Response.Failure -> racepointsResponse.e?.message?.let { errorMessage ->
                     LaunchedEffect(errorMessage) {
-                        showToast(context, errorMessage.toString())
+                        showToast(context, errorMessage)
+                    }
+                }
+            }
+
+            when(val editRacepointResponse = editRacepointResponse) {
+                is Response.Idle -> {}
+                is Response.Loading -> LoadingIndicator()
+                is Response.Success -> LaunchedEffect(Unit) {
+                    showToast(context, "Ellenörző pont frissítve")
+                    viewModel.resetEditRacepointState()
+                }
+                is Response.Failure -> editRacepointResponse.e?.message?.let { errorMessage ->
+                    LaunchedEffect(errorMessage) {
+                        showToast(context, errorMessage)
+                        viewModel.resetEditRacepointState()
                     }
                 }
             }
