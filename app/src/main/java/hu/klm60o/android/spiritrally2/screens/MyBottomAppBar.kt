@@ -5,7 +5,10 @@ import android.content.Context
 import android.content.pm.PackageManager
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
@@ -42,12 +45,17 @@ fun MyBottomAppbarComposable(navController: NavController) {
     val context = LocalContext.current
     BottomAppBar(
         actions = {
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
-                    .fillMaxHeight()
-                    .padding(10.dp, 0.dp, 10.dp, 0.dp)
+
+                    .weight(1f)
             ) {
                 IconButton(onClick = {
                     navController.navigate(NewsScreen)
@@ -65,8 +73,7 @@ fun MyBottomAppbarComposable(navController: NavController) {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
-                    .fillMaxHeight()
-                    .padding(10.dp, 0.dp, 10.dp, 0.dp)
+                    .weight(1f)
             ) {
                 IconButton(onClick = {
                     navController.navigate(MapScreen)
@@ -84,8 +91,7 @@ fun MyBottomAppbarComposable(navController: NavController) {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
-                    .fillMaxHeight()
-                    .padding(10.dp, 0.dp, 10.dp, 0.dp)
+                    .weight(1f)
             ) {
                 IconButton(onClick = {
                     navController.navigate(ResultScreen)
@@ -103,8 +109,7 @@ fun MyBottomAppbarComposable(navController: NavController) {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
-                    .fillMaxHeight()
-                    .padding(10.dp, 0.dp, 10.dp, 0.dp)
+                    .weight(1f)
             ) {
                 IconButton(onClick = {
                     navController.navigate(ProfileScreen)
@@ -118,8 +123,8 @@ fun MyBottomAppbarComposable(navController: NavController) {
                     fontSize = 10.sp
                 )
             }
-        },
-        floatingActionButton = {
+        }
+        /*floatingActionButton = {
             FloatingActionButton(
                 onClick = {
                     //checkCameraPermission(context)
@@ -131,7 +136,8 @@ fun MyBottomAppbarComposable(navController: NavController) {
             ) {
                 Icon(QrCode, contentDescription = "Read QR code")
             }
-        }
+        }*/
+}
     )
 }
 

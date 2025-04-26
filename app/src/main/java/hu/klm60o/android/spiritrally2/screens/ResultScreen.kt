@@ -5,6 +5,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.BottomAppBarDefaults
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,10 +23,13 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import hu.klm60o.android.spiritrally2.presentation.racepoints.RacepointsViewModel
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.unit.dp
+import hu.klm60o.android.spiritrally2.assets.QrCode
 import hu.klm60o.android.spiritrally2.components.LoadingIndicator
 import hu.klm60o.android.spiritrally2.domain.model.Response
 import hu.klm60o.android.spiritrally2.presentation.racepoints.components.EmptyRacepointListContent
 import hu.klm60o.android.spiritrally2.presentation.racepoints.components.RacepointListContent
+import hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme
 import hu.klm60o.android.spiritrally2.useful.showToast
 
 @Composable
@@ -31,7 +38,20 @@ fun ResultScreenComposable(navController: NavController, viewModel: RacepointsVi
     val racepointsResponse by viewModel.racepointsState.collectAsStateWithLifecycle()
     val editRacepointResponse by viewModel.editRacepointState.collectAsStateWithLifecycle()
 
-    Scaffold(bottomBar = { MyBottomAppbarComposable(navController)}) {
+    Scaffold(
+        bottomBar = {
+            MyBottomAppbarComposable(navController)
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {},
+                containerColor = BottomAppBarDefaults.containerColor,
+                elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(10.dp, 15.dp, 15.dp,15.dp)
+            ) {
+                Icon(QrCode, contentDescription = "Read QR code")
+            }
+        }
+        ) {
         innerPadding ->
         Column(verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -309,6 +329,16 @@ fun ResultPreview() {
         )
     }
 }*/
+
+@Preview(showBackground = true)
+@Composable
+fun ResultPreview() {
+    SpiritRally2Theme {
+        ResultScreenComposable(
+            navController = rememberNavController()
+        )
+    }
+}
 
 @Preview(showBackground = true)
 @Composable
