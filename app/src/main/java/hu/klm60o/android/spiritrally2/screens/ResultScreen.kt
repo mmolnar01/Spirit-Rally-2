@@ -27,6 +27,7 @@ import androidx.navigation.compose.rememberNavController
 import hu.klm60o.android.spiritrally2.presentation.racepoints.RacepointsViewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
+import com.google.firebase.Timestamp
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
 import hu.klm60o.android.spiritrally2.assets.QrCode
@@ -36,6 +37,7 @@ import hu.klm60o.android.spiritrally2.presentation.racepoints.components.EmptyRa
 import hu.klm60o.android.spiritrally2.presentation.racepoints.components.RacepointListContent
 import hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme
 import hu.klm60o.android.spiritrally2.useful.showToast
+import org.osmdroid.util.GeoPoint
 
 @Composable
 fun ResultScreenComposable(navController: NavController, viewModel: RacepointsViewModel = hiltViewModel()) {
@@ -43,15 +45,18 @@ fun ResultScreenComposable(navController: NavController, viewModel: RacepointsVi
     val racepointsResponse by viewModel.racepointsState.collectAsStateWithLifecycle()
     val editRacepointResponse by viewModel.editRacepointState.collectAsStateWithLifecycle()
 
+
+
     val barCodeLauncher = rememberLauncherForActivityResult(
         contract = ScanContract()
     ) { result ->
         if (result.contents == null) {
             showToast(context, "Beolvasás megszakítva")
         } else {
-
+            
         }
     }
+
 
     fun showCamera() {
         val options = ScanOptions()
