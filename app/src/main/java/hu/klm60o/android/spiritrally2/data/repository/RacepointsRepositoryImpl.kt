@@ -74,7 +74,7 @@ class RacepointsRepositoryImpl (
 
 
 
-    override suspend fun editRacepointInFirestore(
+    /*override suspend fun editRacepointInFirestore(
         racepointId: Int,
         geoPoint: GeoPoint,
         timestamp: Timestamp
@@ -86,6 +86,18 @@ class RacepointsRepositoryImpl (
                 timestamp = timestamp
             )
             racepointsRef.document(racepointId.toString()).set(racepoint).await()
+            Success(Unit)
+        } catch (e: Exception) {
+            Failure(e)
+        }
+    }*/
+
+    override suspend fun editRacepointInFirestore(
+        racepointId: String,
+        timestamp: Timestamp
+    ): EditRacepointResponse {
+        return try {
+            racepointsRef.document(racepointId).update("timestamp", timestamp).await()
             Success(Unit)
         } catch (e: Exception) {
             Failure(e)

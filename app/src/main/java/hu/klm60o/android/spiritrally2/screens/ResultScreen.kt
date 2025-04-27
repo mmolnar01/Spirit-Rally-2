@@ -16,6 +16,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -38,6 +39,7 @@ import hu.klm60o.android.spiritrally2.presentation.racepoints.components.Racepoi
 import hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme
 import hu.klm60o.android.spiritrally2.useful.showToast
 import org.osmdroid.util.GeoPoint
+import java.util.Calendar
 
 @Composable
 fun ResultScreenComposable(navController: NavController, viewModel: RacepointsViewModel = hiltViewModel()) {
@@ -45,6 +47,7 @@ fun ResultScreenComposable(navController: NavController, viewModel: RacepointsVi
     val racepointsResponse by viewModel.racepointsState.collectAsStateWithLifecycle()
     val editRacepointResponse by viewModel.editRacepointState.collectAsStateWithLifecycle()
 
+    val calendar = Calendar.getInstance()
 
 
     val barCodeLauncher = rememberLauncherForActivityResult(
@@ -53,7 +56,9 @@ fun ResultScreenComposable(navController: NavController, viewModel: RacepointsVi
         if (result.contents == null) {
             showToast(context, "Beolvasás megszakítva")
         } else {
-            
+            val textResultInteger = result.contents.toIntOrNull().toString()
+
+            viewModel.editRacepoint(textResultInteger, Timestamp(calendar.time))
         }
     }
 

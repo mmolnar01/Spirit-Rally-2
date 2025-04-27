@@ -12,5 +12,5 @@ typealias EditRacepointResponse = Response<Unit>
 interface RacepointRepository {
     fun getRacepointsFromFirestore(): Flow<RacepointsResponse>
 
-    suspend fun editRacepointInFirestore(racepointId: Int, geoPoint: GeoPoint, timestamp: Timestamp): EditRacepointResponse
+    suspend fun editRacepointInFirestore(racepointId: String, timestamp: Timestamp): EditRacepointResponse
 }

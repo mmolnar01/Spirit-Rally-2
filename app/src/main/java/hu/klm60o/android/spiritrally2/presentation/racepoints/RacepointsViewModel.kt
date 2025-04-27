@@ -35,9 +35,9 @@ class RacepointsViewModel @Inject constructor(
         }
     }
 
-    fun editRacepoint(racepointId: Int, geoPoint: GeoPoint, timestamp: Timestamp) = viewModelScope.launch {
+    fun editRacepoint(racepointId: String, timestamp: Timestamp) = viewModelScope.launch {
         _editRacepointState.value = Response.Loading
-        _editRacepointState.value = repo.editRacepointInFirestore(racepointId, geoPoint, timestamp)
+        _editRacepointState.value = repo.editRacepointInFirestore(racepointId, timestamp)
     }
 
     fun resetEditRacepointState() {
