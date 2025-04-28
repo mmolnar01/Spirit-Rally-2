@@ -34,12 +34,19 @@ import com.journeyapps.barcodescanner.ScanOptions
 import hu.klm60o.android.spiritrally2.assets.QrCode
 import hu.klm60o.android.spiritrally2.components.LoadingIndicator
 import hu.klm60o.android.spiritrally2.domain.model.Response
+import hu.klm60o.android.spiritrally2.presentation.racepoints.components.AddRacepointFloatingActionButton
 import hu.klm60o.android.spiritrally2.presentation.racepoints.components.EmptyRacepointListContent
 import hu.klm60o.android.spiritrally2.presentation.racepoints.components.RacepointListContent
 import hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme
 import hu.klm60o.android.spiritrally2.useful.showToast
 import org.osmdroid.util.GeoPoint
 import java.util.Calendar
+
+fun test(
+    onUpdateRacepoint: (String, Timestamp) -> Unit
+) {
+
+}
 
 @Composable
 fun ResultScreenComposable(navController: NavController, viewModel: RacepointsViewModel = hiltViewModel()) {
@@ -91,7 +98,7 @@ fun ResultScreenComposable(navController: NavController, viewModel: RacepointsVi
             MyBottomAppbarComposable(navController)
         },
         floatingActionButton = {
-            FloatingActionButton(
+            /*FloatingActionButton(
                 onClick = {
                     requestPermissionLauncher.launch(
                         arrayOf(
@@ -104,7 +111,10 @@ fun ResultScreenComposable(navController: NavController, viewModel: RacepointsVi
                 elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(10.dp, 15.dp, 15.dp,15.dp)
             ) {
                 Icon(QrCode, contentDescription = "Read QR code")
-            }
+            }*/
+            AddRacepointFloatingActionButton(
+                onEditRacepoint = viewModel::editRacepoint
+            )
         }
         ) {
         innerPadding ->

@@ -19,6 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.utsman.osmandcompose.CameraProperty
@@ -27,6 +29,12 @@ import com.utsman.osmandcompose.Marker
 import com.utsman.osmandcompose.OpenStreetMap
 import com.utsman.osmandcompose.rememberMarkerState
 import hu.klm60o.android.spiritrally2.R
+import hu.klm60o.android.spiritrally2.components.LoadingIndicator
+import hu.klm60o.android.spiritrally2.domain.model.Response
+import hu.klm60o.android.spiritrally2.presentation.racepoints.RacepointsViewModel
+import hu.klm60o.android.spiritrally2.presentation.racepoints.components.EmptyRacepointListContent
+import hu.klm60o.android.spiritrally2.presentation.racepoints.components.RacepointListContent
+import hu.klm60o.android.spiritrally2.useful.showToast
 import io.ticofab.androidgpxparser.parser.GPXParser
 import org.osmdroid.util.GeoPoint
 import org.xmlpull.v1.XmlPullParserException
@@ -34,13 +42,15 @@ import java.io.IOException
 import java.io.InputStream
 
 @Composable
-fun MapScreenComposable(navController: NavController) {
+fun MapScreenComposable(navController: NavController, viewModel: RacepointsViewModel = hiltViewModel()) {
 
     /*val raceDataFromGpx = CurrentRaceData()
     raceDataFromGpx.distance = 320
     raceDataFromGpx.start_point = com.google.firebase.firestore.GeoPoint(47.35725982798458, 18.85715482108147)
     raceDataFromGpx.end_point = com.google.firebase.firestore.GeoPoint(46.138127802247205, 18.1175994573563)
     raceDataFromGpx.intermediate_points = emptyList()*/
+
+    val racepointsResponse by viewModel.racepointsState.collectAsStateWithLifecycle()
 
 
 
@@ -131,6 +141,35 @@ fun MapScreenComposable(navController: NavController) {
                         )
                     }
                 }*/
+
+                when(val racepointsResponse = racepointsResponse) {
+                    is Response.Idle -> {}
+                    is Response.Loading -> {}
+                    is Response.Success -> racepointsResponse.data?.let { racepointsList ->
+                        if (racepointsList.isEmpty()) {
+                            //EmptyRacepointListContent(innerPadding = innerPadding)
+                        } else {
+                            racepointsList.forEach { racepoint ->
+                                if (racepoint.timestamp != null) {
+                                    Marker(
+                                        state = rememberMarkerState(geoPoint = GeoPoint(racepoint.location!!.latitude, racepoint.location!!.longitude)),
+                                        icon = greenIcon
+                                    )
+                                } else {
+                                    Marker(
+                                        state = rememberMarkerState(geoPoint = GeoPoint(racepoint.location!!.latitude, racepoint.location!!.longitude)),
+                                        icon = redIcon
+                                    )
+                                }
+                            }
+                        }
+                    }
+                    is Response.Failure -> racepointsResponse.e?.message?.let { errorMessage ->
+                        LaunchedEffect(errorMessage) {
+                            showToast(context, errorMessage)
+                        }
+                    }
+                }
 
                 com.utsman.osmandcompose.Polyline(
                     geoPoints = geoPoints,
