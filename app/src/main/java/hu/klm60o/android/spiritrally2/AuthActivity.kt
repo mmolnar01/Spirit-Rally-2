@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import hu.klm60o.android.spiritrally2.screens.LoginScreenComposable
 import hu.klm60o.android.spiritrally2.screens.RegisterScreenComposable
+import hu.klm60o.android.spiritrally2.screens.ResetPasswordScreenComposable
 import hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme
 import kotlinx.serialization.Serializable
 
@@ -53,6 +54,14 @@ class AuthActivity : ComponentActivity() {
                             color = MaterialTheme.colorScheme.background
                         ) {
                             RegisterScreenComposable(navController = navController)
+                        }
+                    }
+                    composable<ResetPasswordScreen> {
+                        Surface(
+                            modifier = Modifier.fillMaxSize(),
+                            color = MaterialTheme.colorScheme.background
+                        ) {
+                            ResetPasswordScreenComposable(navController = navController)
                         }
                     }
                 }
@@ -89,3 +98,6 @@ object LoginScreen
 
 @Serializable
 object RegisterScreen
+
+@Serializable
+object ResetPasswordScreen

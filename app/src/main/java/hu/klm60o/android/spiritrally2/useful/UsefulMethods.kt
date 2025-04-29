@@ -53,6 +53,12 @@ fun loginUSer(email: String, password: String, onResult: (Throwable?) -> Unit) {
         .addOnCompleteListener { onResult(it.exception) }
 }
 
+//Jelszó megváltoztatása
+fun resetUserPassword(email: String, onResult: (Throwable?) -> Unit) {
+    Firebase.auth.sendPasswordResetEmail(email)
+        .addOnCompleteListener { onResult(it.exception) }
+}
+
 fun Context.findActivity(): ComponentActivity? = when (this) {
     is ComponentActivity -> this
     is ContextWrapper -> baseContext.findActivity()

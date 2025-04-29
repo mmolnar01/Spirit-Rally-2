@@ -2,7 +2,6 @@ package hu.klm60o.android.spiritrally2.screens
 
 import android.app.Activity
 import android.content.Intent
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -13,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
@@ -27,11 +25,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,30 +36,23 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import hu.klm60o.android.spiritrally2.LoginScreen
 import hu.klm60o.android.spiritrally2.MainActivity
+import hu.klm60o.android.spiritrally2.R
+import hu.klm60o.android.spiritrally2.RegisterScreen
 import hu.klm60o.android.spiritrally2.assets.ErrorIcon
 import hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme
 import hu.klm60o.android.spiritrally2.useful.loginUSer
+import hu.klm60o.android.spiritrally2.useful.resetUserPassword
 import hu.klm60o.android.spiritrally2.useful.showToast
 import hu.klm60o.android.spiritrally2.useful.validateEmail
-import hu.klm60o.android.spiritrally2.useful.validatePassword
-import hu.klm60o.android.spiritrally2.R
-import hu.klm60o.android.spiritrally2.RegisterScreen
-import hu.klm60o.android.spiritrally2.useful.findActivity
 
 @Composable
-fun LoginScreenComposable(navController: NavController) {
+fun ResetPasswordScreenComposable(navController: NavController) {
     var validEmail = true
-    var validPassword = true
-    val navController = navController
-    val context = LocalContext.current
 
     Surface {
         val userEmail = remember {
-            mutableStateOf("")
-        }
-
-        val userPassword = remember {
             mutableStateOf("")
         }
 
@@ -82,7 +71,7 @@ fun LoginScreenComposable(navController: NavController) {
                     .padding(10.dp))
 
             //Üdvözlő üzenet
-            Text(text = "Üdvözöl a Spirit Rally!", fontSize = 25.sp,
+            Text(text = "Írd be az email címed!", fontSize = 25.sp,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(0.dp, 20.dp, 0.dp, 0.dp),
@@ -121,79 +110,25 @@ fun LoginScreenComposable(navController: NavController) {
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
             )
 
-            //Jelszó bemeneti mező
-            OutlinedTextField(value = userPassword.value, onValueChange = {
-                userPassword.value = it
-                validPassword = validatePassword(userPassword.value)
-            },
-                isError = !validPassword,
-                supportingText = {
-                    if(!validPassword) {
-                        Text(
-                            modifier = Modifier.fillMaxWidth(),
-                            text = "A jelszó legyen min. 5 karakteres",
-                            color = MaterialTheme.colorScheme.error
-                        )
-                    }
-                },
-                trailingIcon = {
-                    if(!validPassword) {
-                        Icon(ErrorIcon,"error", tint = MaterialTheme.colorScheme.error)
-                    }
-                },
-                leadingIcon = {
-                    Icon(Icons.Default.Lock, contentDescription = "password")
-                },
-                label = {
-                    Text(text = "Jelszó")
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(0.dp, 10.dp, 0.dp, 0.dp),
-                visualTransformation = PasswordVisualTransformation(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
-            )
-
-            //Bejelentkezés gomb
+            //Jelszó megváltoztatása gomb
             ElevatedButton(onClick = {
-                if(validEmail && validPassword) {
-                    loginUSer(userEmail.value, userPassword.value) { error ->
-                        if(error == null) {
-                            val currentUser = Firebase.auth.currentUser
-                            if(currentUser?.isEmailVerified == true) {
-                                //Lekérdezzük a bejlentkezett felhasználó eredményeit
-                                //viewModel.teamName = currentUser.displayName
-                                //viewModel.getUserDataFromFirestore(currentUser, context)
-
-                                //newsViewModel.getNews()
-
-                                context.startActivity(Intent(context, MainActivity::class.java))
-                                val activity = context as? Activity
-                                activity?.finish()
-                                /*BackHandler {
-                                    context.findActivity()?.finish()
-                                }*/
-                                /*navController.navigate(NewsScreen) {
-                                    popUpTo(navController.graph.id) {
-                                        inclusive = true
-                                    }
-                                }*/
-                            } else {
-                                showToast(context, "Az Email nincs megerősítve")
-                            }
+                if(validEmail) {
+                    resetUserPassword(userEmail.value) { error ->
+                        if (error == null) {
+                            
                         } else {
-                            showToast(context, "Sikertelen bejelentkezés")
+                            
                         }
                     }
                 }
             },
                 //A bejelentkezés gomb csak akkor lesz kattintható, ha az email és a jelszó is megfeleleően meg lett adva
-                enabled = userEmail.value.isNotEmpty() && userPassword.value.isNotEmpty(),
+                enabled = userEmail.value.isNotEmpty(),
                 elevation = ButtonDefaults.elevatedButtonElevation(5.dp),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(0.dp, 20.dp, 0.dp, 10.dp)) {
-                Text(text = "Bejelentkezés",
+                Text(text = "Jelszó megváltoztatása",
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(5.dp),
@@ -208,33 +143,14 @@ fun LoginScreenComposable(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(5.dp)) {
-                Text(text = "Még nem regisztráltál?",
+                Text(text = "Rossz helyen vagy?",
                     modifier = Modifier
                         .padding(5.dp))
-                Text(text = "Regisztráció",
+                Text(text = "Bejelentkezés",
                     modifier = Modifier
                         .padding(5.dp)
                         .clickable {
-                            navController.navigate(RegisterScreen)
-                        },
-                    fontWeight = FontWeight.Bold
-                )
-            }
-
-
-            Row(verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(5.dp)) {
-                Text(text = "Elfelejtett jelszó?",
-                    modifier = Modifier
-                        .padding(5.dp))
-                Text(text = "Katt ide",
-                    modifier = Modifier
-                        .padding(5.dp)
-                        .clickable {
-
+                            navController.navigate(LoginScreen)
                         },
                     fontWeight = FontWeight.Bold
                 )
@@ -245,9 +161,9 @@ fun LoginScreenComposable(navController: NavController) {
 
 @Preview(showBackground = true)
 @Composable
-fun LoginPreview() {
+fun ResetPasswordPreview() {
     SpiritRally2Theme {
-        LoginScreenComposable(
+        ResetPasswordScreenComposable(
             navController = rememberNavController()
         )
     }
@@ -255,9 +171,9 @@ fun LoginPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun LoginPreviewDark() {
+fun ResetPasswordPreviewDark() {
     SpiritRally2Theme(darkTheme = true) {
-        LoginScreenComposable(
+        ResetPasswordScreenComposable(
             navController = rememberNavController()
         )
     }
