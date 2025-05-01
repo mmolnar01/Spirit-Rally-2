@@ -1,7 +1,5 @@
 package hu.klm60o.android.spiritrally2.screens
 
-import android.app.Activity
-import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -12,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
@@ -25,6 +24,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -34,22 +34,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import hu.klm60o.android.spiritrally2.LoginScreen
-import hu.klm60o.android.spiritrally2.MainActivity
 import hu.klm60o.android.spiritrally2.R
-import hu.klm60o.android.spiritrally2.RegisterScreen
 import hu.klm60o.android.spiritrally2.assets.ErrorIcon
+import hu.klm60o.android.spiritrally2.components.MyAlertDialog
 import hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme
-import hu.klm60o.android.spiritrally2.useful.loginUSer
 import hu.klm60o.android.spiritrally2.useful.resetUserPassword
 import hu.klm60o.android.spiritrally2.useful.showToast
 import hu.klm60o.android.spiritrally2.useful.validateEmail
 
 @Composable
 fun ResetPasswordScreenComposable(navController: NavController) {
+    val context = LocalContext.current
     var validEmail = true
+    val openAlertDialog = remember { mutableStateOf(false) }
 
     Surface {
         val userEmail = remember {
@@ -115,9 +113,9 @@ fun ResetPasswordScreenComposable(navController: NavController) {
                 if(validEmail) {
                     resetUserPassword(userEmail.value) { error ->
                         if (error == null) {
-                            
+                            openAlertDialog.value = true
                         } else {
-                            
+                            showToast(context, "Error: ${error.message}")
                         }
                     }
                 }
@@ -154,6 +152,20 @@ fun ResetPasswordScreenComposable(navController: NavController) {
                         },
                     fontWeight = FontWeight.Bold
                 )
+            }
+            when {
+                openAlertDialog.value -> {
+                    MyAlertDialog(
+                        onDismissRequest = { openAlertDialog.value = false},
+                        onConfirmation = {
+                            openAlertDialog.value = false
+                            navController.navigate(LoginScreen)
+                        },
+                        dialogTitle = "Jelszó változtatás",
+                        dialogText = "Jelszó változtatási kérelem elküldve a megadott email címre",
+                        icon = Icons.Default.Email
+                    )
+                }
             }
         }
     }

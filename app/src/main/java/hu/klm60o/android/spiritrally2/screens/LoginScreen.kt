@@ -2,7 +2,6 @@ package hu.klm60o.android.spiritrally2.screens
 
 import android.app.Activity
 import android.content.Intent
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -41,15 +40,15 @@ import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import hu.klm60o.android.spiritrally2.MainActivity
+import hu.klm60o.android.spiritrally2.R
+import hu.klm60o.android.spiritrally2.RegisterScreen
+import hu.klm60o.android.spiritrally2.ResetPasswordScreen
 import hu.klm60o.android.spiritrally2.assets.ErrorIcon
 import hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme
 import hu.klm60o.android.spiritrally2.useful.loginUSer
 import hu.klm60o.android.spiritrally2.useful.showToast
 import hu.klm60o.android.spiritrally2.useful.validateEmail
 import hu.klm60o.android.spiritrally2.useful.validatePassword
-import hu.klm60o.android.spiritrally2.R
-import hu.klm60o.android.spiritrally2.RegisterScreen
-import hu.klm60o.android.spiritrally2.useful.findActivity
 
 @Composable
 fun LoginScreenComposable(navController: NavController) {
@@ -234,7 +233,7 @@ fun LoginScreenComposable(navController: NavController) {
                     modifier = Modifier
                         .padding(5.dp)
                         .clickable {
-
+                            navController.navigate(ResetPasswordScreen)
                         },
                     fontWeight = FontWeight.Bold
                 )

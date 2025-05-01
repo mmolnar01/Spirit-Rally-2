@@ -1,6 +1,5 @@
 package hu.klm60o.android.spiritrally2.screens
 
-import android.Manifest
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
@@ -8,15 +7,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.BottomAppBarDefaults
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.FloatingActionButtonDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -25,28 +19,19 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import hu.klm60o.android.spiritrally2.presentation.racepoints.RacepointsViewModel
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.unit.dp
 import com.google.firebase.Timestamp
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
-import hu.klm60o.android.spiritrally2.assets.QrCode
 import hu.klm60o.android.spiritrally2.components.LoadingIndicator
 import hu.klm60o.android.spiritrally2.domain.model.Response
+import hu.klm60o.android.spiritrally2.presentation.racepoints.RacepointsViewModel
 import hu.klm60o.android.spiritrally2.presentation.racepoints.components.AddRacepointFloatingActionButton
 import hu.klm60o.android.spiritrally2.presentation.racepoints.components.EmptyRacepointListContent
 import hu.klm60o.android.spiritrally2.presentation.racepoints.components.RacepointListContent
 import hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme
 import hu.klm60o.android.spiritrally2.useful.showToast
-import org.osmdroid.util.GeoPoint
 import java.util.Calendar
 
-fun test(
-    onUpdateRacepoint: (String, Timestamp) -> Unit
-) {
-
-}
 
 @Composable
 fun ResultScreenComposable(navController: NavController, viewModel: RacepointsViewModel = hiltViewModel()) {
@@ -57,61 +42,11 @@ fun ResultScreenComposable(navController: NavController, viewModel: RacepointsVi
     val calendar = Calendar.getInstance()
 
 
-    val barCodeLauncher = rememberLauncherForActivityResult(
-        contract = ScanContract()
-    ) { result ->
-        if (result.contents == null) {
-            showToast(context, "Beolvasás megszakítva")
-        } else {
-            val textResultInteger = result.contents.toIntOrNull().toString()
-
-            viewModel.editRacepoint(textResultInteger, Timestamp(calendar.time))
-        }
-    }
-
-
-    fun showCamera() {
-        val options = ScanOptions()
-        options.setDesiredBarcodeFormats(ScanOptions.QR_CODE)
-        options.setPrompt("Olvass be egy QR kódot")
-        options.setCameraId(0)
-        options.setBeepEnabled(false)
-        options.setOrientationLocked(false)
-
-        barCodeLauncher.launch(options)
-    }
-
-    val requestPermissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissions ->
-        if (!permissions.containsValue(false)) {
-            showCamera()
-        } else {
-            showToast(context, "Kérem engedélyezze a jogosultságokat")
-        }
-    }
-
-
-
     Scaffold(
         bottomBar = {
             MyBottomAppbarComposable(navController)
         },
         floatingActionButton = {
-            /*FloatingActionButton(
-                onClick = {
-                    requestPermissionLauncher.launch(
-                        arrayOf(
-                            Manifest.permission.CAMERA,
-                            Manifest.permission.ACCESS_FINE_LOCATION
-                        )
-                    )
-                },
-                containerColor = BottomAppBarDefaults.containerColor,
-                elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(10.dp, 15.dp, 15.dp,15.dp)
-            ) {
-                Icon(QrCode, contentDescription = "Read QR code")
-            }*/
             AddRacepointFloatingActionButton(
                 onEditRacepoint = viewModel::editRacepoint
             )
