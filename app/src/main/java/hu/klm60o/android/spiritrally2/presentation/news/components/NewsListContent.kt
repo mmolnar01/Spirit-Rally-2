@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import hu.klm60o.android.spiritrally2.domain.model.News
 import hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme
 
@@ -17,7 +18,7 @@ fun NewsListContent(
     newsList: List<News>
 ) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize().padding(innerPadding)
+        modifier = Modifier.fillMaxSize().padding(0.dp)
     ) {
         items(newsList, key = { news -> news.id!!}) { news ->
             NewsCard(news)

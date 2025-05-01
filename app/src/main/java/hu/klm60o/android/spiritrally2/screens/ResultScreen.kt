@@ -43,6 +43,7 @@ fun ResultScreenComposable(navController: NavController, viewModel: RacepointsVi
         bottomBar = {
             MyBottomAppbarComposable(navController)
         },
+        topBar = { MyTopAppBar() },
         floatingActionButton = {
             AddRacepointFloatingActionButton(
                 onEditRacepoint = viewModel::editRacepoint

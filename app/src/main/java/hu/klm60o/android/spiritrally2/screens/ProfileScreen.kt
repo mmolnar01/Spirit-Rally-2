@@ -27,16 +27,15 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.google.rpc.context.AttributeContext.Auth
 import hu.klm60o.android.spiritrally2.AuthActivity
 
 @Composable
 fun ProfileScreenComposable(navController: NavController) {
-    val navController = navController
     val context = LocalContext.current
     //val viewModel = viewModel
     Scaffold(
-        bottomBar = { MyBottomAppbarComposable(navController) }
+        bottomBar = { MyBottomAppbarComposable(navController) },
+        topBar = { MyTopAppBar() }
     ) {
             innerPadding ->
         Column(verticalArrangement = Arrangement.Center,

@@ -54,7 +54,6 @@ import hu.klm60o.android.spiritrally2.useful.validatePassword
 fun LoginScreenComposable(navController: NavController) {
     var validEmail = true
     var validPassword = true
-    val navController = navController
     val context = LocalContext.current
 
     Surface {

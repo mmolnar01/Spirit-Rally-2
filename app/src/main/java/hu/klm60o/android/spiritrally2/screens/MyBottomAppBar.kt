@@ -1,13 +1,8 @@
 package hu.klm60o.android.spiritrally2.screens
 
-import android.Manifest
-import android.content.Context
-import android.content.pm.PackageManager
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -16,9 +11,6 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.BottomAppBarDefaults
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -30,15 +22,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import hu.klm60o.android.spiritrally2.MapScreen
 import hu.klm60o.android.spiritrally2.NewsScreen
 import hu.klm60o.android.spiritrally2.ProfileScreen
 import hu.klm60o.android.spiritrally2.ResultScreen
-import hu.klm60o.android.spiritrally2.assets.QrCode
 
 @Composable
 fun MyBottomAppbarComposable(navController: NavController) {

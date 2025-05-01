@@ -89,7 +89,8 @@ fun MapScreenComposable(navController: NavController, viewModel: RacepointsViewM
     }
 
     Scaffold(
-        bottomBar = { MyBottomAppbarComposable(navController) }
+        bottomBar = { MyBottomAppbarComposable(navController) },
+        topBar = { MyTopAppBar() }
     ) {
             innerPadding ->
         Column(verticalArrangement = Arrangement.Center,

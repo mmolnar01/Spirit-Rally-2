@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -31,7 +32,8 @@ fun NewsScreenComposable(navController: NavController, viewModel: NewsViewModel 
     val newsResponse by viewModel.newsState.collectAsStateWithLifecycle()
 
     Scaffold(
-        bottomBar = { MyBottomAppbarComposable(navController) }
+        bottomBar = { MyBottomAppbarComposable(navController) },
+        topBar = { MyTopAppBar() }
     ) {
         innerPadding ->
         Column(verticalArrangement = Arrangement.Top,

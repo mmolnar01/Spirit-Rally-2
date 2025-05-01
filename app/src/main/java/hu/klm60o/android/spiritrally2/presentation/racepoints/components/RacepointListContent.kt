@@ -21,7 +21,7 @@ fun RacepointListContent(
     racepointList: List<Racepoint>
 ) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize().padding(innerPadding)
+        modifier = Modifier.fillMaxSize().padding(0.dp)
     ) {
         items(racepointList, key = { racePoint -> racePoint.id!! }) { racePoint ->
             RacepointCard(racePoint, racepointList.size)
