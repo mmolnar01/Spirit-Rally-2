@@ -72,26 +72,6 @@ class RacepointsRepositoryImpl (
         }
     }
 
-
-
-    /*override suspend fun editRacepointInFirestore(
-        racepointId: Int,
-        geoPoint: GeoPoint,
-        timestamp: Timestamp
-    ): EditRacepointResponse {
-        return try {
-            val racepoint = Racepoint(
-                id = racepointId,
-                location = geoPoint,
-                timestamp = timestamp
-            )
-            racepointsRef.document(racepointId.toString()).set(racepoint).await()
-            Success(Unit)
-        } catch (e: Exception) {
-            Failure(e)
-        }
-    }*/
-
     override suspend fun editRacepointInFirestore(
         racepointId: String,
         timestamp: Timestamp

@@ -8,8 +8,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import hu.klm60o.android.spiritrally2.data.repository.NewsRepositoryImpl
 import hu.klm60o.android.spiritrally2.domain.repository.RacepointRepository
 import hu.klm60o.android.spiritrally2.data.repository.RacepointsRepositoryImpl
+import hu.klm60o.android.spiritrally2.domain.repository.NewsRepository
 
 
 @Module
@@ -24,5 +26,12 @@ object AppModule {
     ): RacepointRepository = RacepointsRepositoryImpl(
         racepointsRef = db.collection("results").document(Firebase.auth.uid.toString()).collection("my_results"),
         commonRef = db.collection("data")
+    )
+
+    @Provides
+    fun provideNewsRepository(
+        db: FirebaseFirestore
+    ): NewsRepository = NewsRepositoryImpl(
+        newsRef = db.collection("news")
     )
 }

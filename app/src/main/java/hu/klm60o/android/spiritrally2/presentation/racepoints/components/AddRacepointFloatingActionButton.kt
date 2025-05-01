@@ -20,6 +20,7 @@ import java.util.Calendar
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.remember
+import hu.klm60o.android.spiritrally2.domain.model.Racepoint
 
 @Composable
 fun AddRacepointFloatingActionButton(
@@ -34,6 +35,7 @@ fun AddRacepointFloatingActionButton(
     ) { result ->
         if (result.contents == null) {
             showToast(context, "Beolvasás megszakítva")
+            //showToast(context, racePointsList.get(0).id.toString())
         } else {
             textResultInteger = result.contents.toIntOrNull().toString()
             //showToast(context, textResultInteger)
