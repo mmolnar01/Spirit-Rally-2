@@ -18,7 +18,7 @@ fun NewsListContent(
     newsList: List<News>
 ) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize().padding(0.dp)
+        modifier = Modifier.fillMaxSize().padding(3.dp)
     ) {
         items(newsList, key = { news -> news.id!!}) { news ->
             NewsCard(news)

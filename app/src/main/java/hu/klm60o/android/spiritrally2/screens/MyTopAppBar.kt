@@ -25,7 +25,7 @@ import hu.klm60o.android.spiritrally2.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyTopAppBar() {
-    Surface(shadowElevation = 5.dp) {
+    Surface(shadowElevation = 10.dp, tonalElevation = 5.dp) {
         CenterAlignedTopAppBar(
             colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
 
