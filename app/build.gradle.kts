@@ -102,4 +102,7 @@ dependencies {
     //ViewModel
     implementation(libs.viewmodel.compose)
     implementation(libs.hilt.viewmodel)
+
+    //Google Services
+    implementation(libs.google.services.location)
 }

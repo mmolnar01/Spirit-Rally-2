@@ -9,6 +9,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -18,6 +20,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import hu.klm60o.android.spiritrally2.components.LoadingIndicator
+import hu.klm60o.android.spiritrally2.domain.model.Racepoint
 import hu.klm60o.android.spiritrally2.domain.model.Response
 import hu.klm60o.android.spiritrally2.presentation.racepoints.RacepointsViewModel
 import hu.klm60o.android.spiritrally2.presentation.racepoints.components.AddRacepointFloatingActionButton
@@ -35,6 +38,7 @@ fun ResultScreenComposable(navController: NavController, viewModel: RacepointsVi
     val editRacepointResponse by viewModel.editRacepointState.collectAsStateWithLifecycle()
 
     //var localRacePointsList = remember { mutableStateListOf<Racepoint>() }
+    var localRacePointsList = remember { listOf<Racepoint>() }
 
     val calendar = Calendar.getInstance()
 
@@ -46,7 +50,8 @@ fun ResultScreenComposable(navController: NavController, viewModel: RacepointsVi
         topBar = { MyTopAppBar() },
         floatingActionButton = {
             AddRacepointFloatingActionButton(
-                onEditRacepoint = viewModel::editRacepoint
+                onEditRacepoint = viewModel::editRacepoint,
+                racepointList = localRacePointsList
             )
         }
         ) {
@@ -68,7 +73,7 @@ fun ResultScreenComposable(navController: NavController, viewModel: RacepointsVi
                         EmptyRacepointListContent(innerPadding = innerPadding)
                     } else {
                         RacepointListContent(innerPadding = innerPadding, racepointList = racepointsList)
-                        //localRacePointsList = racepointsList as SnapshotStateList<Racepoint>
+                        localRacePointsList = racepointsList
                     }
                 }
                 is Response.Failure -> racepointsResponse.e?.message?.let { errorMessage ->

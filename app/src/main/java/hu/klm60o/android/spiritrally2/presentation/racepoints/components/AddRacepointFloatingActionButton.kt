@@ -24,11 +24,13 @@ import hu.klm60o.android.spiritrally2.domain.model.Racepoint
 
 @Composable
 fun AddRacepointFloatingActionButton(
-    onEditRacepoint: (String, Timestamp) -> Unit
+    onEditRacepoint: (String, Timestamp) -> Unit,
+    racepointList: List<Racepoint>
 ) {
     val calendar = Calendar.getInstance()
     val context = LocalContext.current
     var textResultInteger by remember { mutableStateOf("") }
+    //val fusedLocationProviderClient = FusedLocationProviderClient
 
     val barCodeLauncher = rememberLauncherForActivityResult(
         contract = ScanContract()
