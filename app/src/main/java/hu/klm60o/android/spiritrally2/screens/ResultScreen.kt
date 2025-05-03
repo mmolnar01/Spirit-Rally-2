@@ -38,7 +38,8 @@ fun ResultScreenComposable(navController: NavController, viewModel: RacepointsVi
     val editRacepointResponse by viewModel.editRacepointState.collectAsStateWithLifecycle()
 
     //var localRacePointsList = remember { mutableStateListOf<Racepoint>() }
-    var localRacePointsList = remember { listOf<Racepoint>() }
+    //var localRacePointsList = remember { listOf<Racepoint>() }
+    val localRacePointsList = remember { mutableStateListOf<Racepoint>() }
 
     val calendar = Calendar.getInstance()
 
@@ -73,7 +74,9 @@ fun ResultScreenComposable(navController: NavController, viewModel: RacepointsVi
                         EmptyRacepointListContent(innerPadding = innerPadding)
                     } else {
                         RacepointListContent(innerPadding = innerPadding, racepointList = racepointsList)
-                        localRacePointsList = racepointsList
+                        //localRacePointsList = racepointsList
+                        localRacePointsList.clear()
+                        localRacePointsList.addAll(racepointsList)
                     }
                 }
                 is Response.Failure -> racepointsResponse.e?.message?.let { errorMessage ->
