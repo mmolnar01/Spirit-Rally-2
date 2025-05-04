@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -56,6 +57,12 @@ fun RaceResultCard(
             achievedRacePoints.intValue++
         }
     }
+
+    val averageSpeedText = remember { mutableStateOf("") }
+    val racePointText = remember { mutableStateOf("") }
+    averageSpeedText.value = "${averageSpeed.doubleValue} km/h"
+    racePointText.value = "${achievedRacePoints.intValue} / ${totalRacepoints.intValue}"
+
     Column(
 
     ) {
@@ -77,7 +84,7 @@ fun RaceResultCard(
                 horizontalAlignment = Alignment.End
             ) {
                 OutlinedTextField(
-                    value = "${achievedRacePoints.intValue} / ${totalRacepoints.intValue}",
+                    value = racePointText.value,
                     onValueChange = {},
                     readOnly = true,
                     modifier = Modifier
@@ -106,7 +113,7 @@ fun RaceResultCard(
                 horizontalAlignment = Alignment.End
             ) {
                 OutlinedTextField(
-                    value = "${averageSpeed.doubleValue} km/h",
+                    value = averageSpeedText.value,
                     onValueChange = {},
                     readOnly = true,
                     modifier = Modifier
