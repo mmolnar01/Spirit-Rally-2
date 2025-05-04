@@ -38,13 +38,16 @@ fun RaceResultCard(
 
     //val geoPoints = getGeoPointsFromGpx(context, "tabaliget.gpx")
     //val distance = getDistanceFromGeoPoints(geoPoints)
-    
+
+    //GeoPoint lista lekérdezése
     val geoPoints = remember { mutableStateListOf<GeoPoint>() }
     geoPoints.addAll(getGeoPointsFromGpx(context, "tabaliget.gpx"))
 
+    //Távolság lekérdezése
     val distance = remember { mutableDoubleStateOf(0.0) }
     distance.doubleValue = getDistanceFromGeoPoints(geoPoints)
 
+    //Átlagsebesség kiszámítása
     val averageSpeed = remember { mutableDoubleStateOf(0.0) }
 
     if (racePoints.first().timestamp != null && racePoints.last().timestamp != null) {
@@ -58,6 +61,7 @@ fun RaceResultCard(
         }
     }
 
+    //Eredmény szövegek létrehozása
     val averageSpeedText = remember { mutableStateOf("") }
     val racePointText = remember { mutableStateOf("") }
     averageSpeedText.value = "${averageSpeed.doubleValue} km/h"
