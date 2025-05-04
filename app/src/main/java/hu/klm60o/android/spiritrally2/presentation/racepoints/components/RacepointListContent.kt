@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,13 +19,13 @@ import hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme
 @Composable
 fun RacepointListContent(
     innerPadding: PaddingValues,
-    racepointList: List<Racepoint>
+    racePointList: List<Racepoint>
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize().padding(3.dp)
     ) {
-        items(racepointList, key = { racePoint -> racePoint.id!! }) { racePoint ->
-            RacepointCard(racePoint, racepointList.size)
+        items(racePointList, key = { racePoint -> racePoint.id!! }) { racePoint ->
+            RacepointCard(racePoint, racePointList.size)
         }
         item {
             HorizontalDivider(
@@ -33,10 +34,13 @@ fun RacepointListContent(
                     .padding(10.dp)
             )
         }
+        item {
+            RaceResultCard(racePointList)
+        }
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, apiLevel = 34)
 @Composable
 fun RacepointListContentPreview() {
     val racePoint1 = Racepoint(1, GeoPoint(1.0, 1.0), Timestamp(100000, 50000))

@@ -34,6 +34,9 @@ import hu.klm60o.android.spiritrally2.domain.model.Response
 import hu.klm60o.android.spiritrally2.presentation.racepoints.RacepointsViewModel
 import hu.klm60o.android.spiritrally2.presentation.racepoints.components.EmptyRacepointListContent
 import hu.klm60o.android.spiritrally2.presentation.racepoints.components.RacepointListContent
+import hu.klm60o.android.spiritrally2.useful.getDistanceFromGeoPoints
+import hu.klm60o.android.spiritrally2.useful.getDistanceFromLatLonInKm
+import hu.klm60o.android.spiritrally2.useful.getGeoPointsFromGpx
 import hu.klm60o.android.spiritrally2.useful.showToast
 import io.ticofab.androidgpxparser.parser.GPXParser
 import org.osmdroid.util.GeoPoint
@@ -55,7 +58,7 @@ fun MapScreenComposable(navController: NavController, viewModel: RacepointsViewM
 
 
     val context = LocalContext.current
-    val parser = GPXParser()
+    /*val parser = GPXParser()
     val geoPoints: MutableList<GeoPoint> = ArrayList<GeoPoint>()
     try {
         val input: InputStream = context.assets.open("tabaliget.gpx")
@@ -77,7 +80,11 @@ fun MapScreenComposable(navController: NavController, viewModel: RacepointsViewM
     } catch (e: XmlPullParserException) {
         // do something with this exception
         e.printStackTrace()
-    }
+    }*/
+    val geoPoints = getGeoPointsFromGpx(context, "tabaliget.gpx")
+
+    //val distance = getDistanceFromGeoPoints(geoPoints)
+    //showToast(context, distance.toString())
 
 
     val redIcon: Drawable? by remember {

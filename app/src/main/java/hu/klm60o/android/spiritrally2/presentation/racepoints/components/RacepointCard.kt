@@ -84,7 +84,7 @@ fun RacepointCard(
                 modifier = Modifier
                     .padding(5.dp)
             ) {
-                Text("$racepointNumber. ellenörző pont")
+                Text("$racepointNumber. ellenőrző pont")
             }
         }
 
@@ -108,7 +108,7 @@ fun RacepointCard(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, apiLevel = 34)
 @Composable
 fun RacepointCardPreview() {
     val racePoint1 = Racepoint(1, GeoPoint(1.0, 1.0), Timestamp(100000, 50000))

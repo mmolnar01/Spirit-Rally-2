@@ -73,7 +73,7 @@ fun ResultScreenComposable(navController: NavController, viewModel: RacepointsVi
                     if (racepointsList.isEmpty()) {
                         EmptyRacepointListContent(innerPadding = innerPadding)
                     } else {
-                        RacepointListContent(innerPadding = innerPadding, racepointList = racepointsList)
+                        RacepointListContent(innerPadding = innerPadding, racePointList = racepointsList)
                         //localRacePointsList = racepointsList
                         localRacePointsList.clear()
                         localRacePointsList.addAll(racepointsList)
