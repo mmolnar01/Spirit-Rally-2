@@ -1,0 +1,84 @@
+package hu.klm60o.android.spiritrally2.permissions
+
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
+import com.google.accompanist.permissions.shouldShowRationale
+import hu.klm60o.android.spiritrally2.components.MyAlertDialog
+
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
+@OptIn(ExperimentalPermissionsApi::class)
+@Composable
+fun RequestNotificationPermissionDialog() {
+    val permissionState = rememberPermissionState(permission = android.Manifest.permission.POST_NOTIFICATIONS)
+
+    if (!permissionState.status.isGranted) {
+        if (permissionState.status.shouldShowRationale) {
+            RationaleDialog()
+        } else {
+            PermissionDialog { permissionState.launchPermissionRequest() }
+        }
+    }
+}
+
+@Composable
+fun RationaleDialog() {
+    var showWarningDialog by remember { mutableStateOf(true) }
+
+    if (showWarningDialog) {
+        MyAlertDialog(
+            onConfirmation = { showWarningDialog = false},
+            onDismissRequest = {},
+            dialogTitle = "Jogosultság engedélyezése",
+            dialogText = "Kérem engedélyezze az Értesítés jogosultságokat a beállításokban",
+            icon = Icons.Filled.Info
+        )
+    }
+}
+
+
+@Composable
+fun PermissionDialog(onRequestPermission: () -> Unit) {
+    var showWarningDialog by remember { mutableStateOf(true) }
+
+    if (showWarningDialog) {
+        AlertDialog(
+            icon = {
+                Icon(Icons.Filled.Info, contentDescription = "Pop-up Icon")
+            },
+            title = {
+                Text(text = "Jogosultság engedélyezése")
+            },
+            text = {
+                Text(text = "Kérlek engedélyezd a felugró jogosultságokat")
+            },
+            onDismissRequest = {
+
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        onRequestPermission()
+                        showWarningDialog = false
+                    }
+                ) {
+                    Text("OK")
+                }
+            }
+        )
+    }
+}

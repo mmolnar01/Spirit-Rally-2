@@ -1,5 +1,6 @@
 package hu.klm60o.android.spiritrally2.screens
 
+import android.os.Build
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -22,6 +23,7 @@ import hu.klm60o.android.spiritrally2.presentation.news.NewsViewModel
 import androidx.compose.runtime.getValue
 import hu.klm60o.android.spiritrally2.components.LoadingIndicator
 import hu.klm60o.android.spiritrally2.domain.model.Response
+import hu.klm60o.android.spiritrally2.permissions.RequestNotificationPermissionDialog
 import hu.klm60o.android.spiritrally2.presentation.news.components.EmptyNewsListContent
 import hu.klm60o.android.spiritrally2.presentation.news.components.NewsListContent
 import hu.klm60o.android.spiritrally2.useful.showToast
@@ -30,6 +32,10 @@ import hu.klm60o.android.spiritrally2.useful.showToast
 fun NewsScreenComposable(navController: NavController, viewModel: NewsViewModel = hiltViewModel()) {
     val context = LocalContext.current
     val newsResponse by viewModel.newsState.collectAsStateWithLifecycle()
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        RequestNotificationPermissionDialog()
+    }
 
     Scaffold(
         bottomBar = { MyBottomAppbarComposable(navController) },
