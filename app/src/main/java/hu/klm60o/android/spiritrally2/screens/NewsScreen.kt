@@ -34,9 +34,9 @@ fun NewsScreenComposable(navController: NavController, viewModel: NewsViewModel 
     Scaffold(
         bottomBar = { MyBottomAppbarComposable(navController) },
         topBar = { MyTopAppBar() }
-    ) {
-        innerPadding ->
-        Column(verticalArrangement = Arrangement.Top,
+    ) { innerPadding ->
+        Column(
+            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxHeight()
@@ -47,7 +47,7 @@ fun NewsScreenComposable(navController: NavController, viewModel: NewsViewModel 
             //NewsList(newsViewModel.itemList.value)
             //Text("Ez itt a hírek képernyő")
 
-            when(val newsResponse = newsResponse) {
+            when (val newsResponse = newsResponse) {
                 is Response.Idle -> {}
                 is Response.Loading -> LoadingIndicator()
                 is Response.Success -> newsResponse.data?.let { newsList ->
@@ -57,6 +57,7 @@ fun NewsScreenComposable(navController: NavController, viewModel: NewsViewModel 
                         NewsListContent(innerPadding, newsList)
                     }
                 }
+
                 is Response.Failure -> newsResponse.e?.message?.let { errorMessage ->
                     LaunchedEffect(errorMessage) {
                         showToast(context, errorMessage)
@@ -66,76 +67,7 @@ fun NewsScreenComposable(navController: NavController, viewModel: NewsViewModel 
         }
 
     }
-    /*Surface {
-        Column(verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxHeight()
-                .padding(20.dp)) {
-            Text(text = "Ez itt a hírek képernyő", fontSize = 25.sp,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(0.dp, 20.dp, 0.dp, 0.dp),
-                textAlign = TextAlign.Center
-            )
-        }
-        MyBottomAppbarComposable()
-    }*/
 }
-
-/*@Composable
-fun NewsList(itemList: List<News>) {
-    LazyColumn {
-        items(itemList, key = { item -> item.id }) { item ->
-            ListItem(
-                headlineContent = {
-                    Text(
-                        text = item.title,
-                        modifier = Modifier
-                            .padding(0.dp, 0.dp, 0.dp, 5.dp)
-                    )
-                },
-                supportingContent = {
-                    Text(text = item.content,
-                        modifier = Modifier
-                            .padding(0.dp, 0.dp, 0.dp, 5.dp)
-                    )
-                },
-                leadingContent = {
-                    if (item.important) {
-                        Icon(
-                            imageVector = Icons.Filled.Warning,
-                            contentDescription = "NewsIcon",
-                            tint = Color.Red
-                        )
-                    }
-                    else {
-                        Icon(
-                            imageVector = Icons.Filled.Info,
-                            contentDescription = "NewsIcon"
-                        )
-                    }
-
-                },
-                overlineContent = {
-                    if (item.important) {
-                        Text(text = "FIYGELMEZTETÉS",
-                            modifier = Modifier
-                                .padding(0.dp, 0.dp, 0.dp, 5.dp)
-                        )
-                    }
-                    else {
-                        Text(text = "INFORMÁCIÓ",
-                            modifier = Modifier
-                                .padding(0.dp, 0.dp, 0.dp, 5.dp)
-                        )
-                    }
-                }
-            )
-            Divider()
-        }
-    }
-}*/
 
 @Preview(showBackground = true)
 @Composable

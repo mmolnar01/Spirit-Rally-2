@@ -108,4 +108,7 @@ dependencies {
 
     //Google Services
     implementation(libs.google.services.location)
+
+    //Accompanist Permissions
+    implementation(libs.google.accompanist.permissions)
 }
