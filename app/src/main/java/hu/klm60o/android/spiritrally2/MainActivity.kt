@@ -1,6 +1,7 @@
 package hu.klm60o.android.spiritrally2
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -11,6 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import hu.klm60o.android.spiritrally2.screens.MapScreenComposable
 import hu.klm60o.android.spiritrally2.screens.NewsScreenComposable
@@ -62,6 +67,15 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             }
+        }
+
+        FirebaseMessaging.getInstance().token.addOnSuccessListener { token ->
+            val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return@addOnSuccessListener
+            val db = FirebaseFirestore.getInstance()
+            db.collection("tokens").document(userId)
+                .set(mapOf("token" to token))
+                .addOnSuccessListener { Log.d("FCM", "Token saved") }
+                .addOnFailureListener { e -> Log.w("FCM", "Error saving token", e)}
         }
     }
 }
