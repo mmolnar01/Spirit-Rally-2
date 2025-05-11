@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Spirit Rally 2</string>
     <string name="title_activity_auth">Spirit Rally 2</string>
+    <string name="default_notification_channel_id">firebase_channel_1</string>
 </resources>

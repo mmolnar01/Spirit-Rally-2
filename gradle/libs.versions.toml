@@ -46,6 +46,7 @@ firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.r
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging-ktx"}
 osm-main = { group = "org.osmdroid", name = "osmdroid-android", version.ref = "osm" }
 osm-compose = { group = "tech.utsmankece", name = "osm-android-compose", version.ref = "osmCompose" }
 gpx-parser = { group = "com.github.ticofab", name = "android-gpx-parser", version.ref = "gpxParser" }

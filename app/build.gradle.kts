@@ -74,6 +74,9 @@ dependencies {
     //Firebase Firestore
     implementation(libs.firebase.firestore)
 
+    //Firebase Messaging
+    implementation(libs.firebase.messaging)
+
     //OpenSteetMap
     implementation(libs.osm.main)
     implementation(libs.osm.compose)

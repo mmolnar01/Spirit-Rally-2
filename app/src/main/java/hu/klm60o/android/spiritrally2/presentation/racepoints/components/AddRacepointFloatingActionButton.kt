@@ -10,25 +10,23 @@ import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
+import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.firebase.Timestamp
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
 import hu.klm60o.android.spiritrally2.assets.QrCode
-import hu.klm60o.android.spiritrally2.useful.showToast
-import java.util.Calendar
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.remember
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.Priority
-import com.google.android.gms.tasks.CancellationTokenSource
 import hu.klm60o.android.spiritrally2.domain.model.Racepoint
 import hu.klm60o.android.spiritrally2.useful.checkIsInBound
+import hu.klm60o.android.spiritrally2.useful.showToast
+import java.util.Calendar
 
 @SuppressLint("MissingPermission")
 @Composable
