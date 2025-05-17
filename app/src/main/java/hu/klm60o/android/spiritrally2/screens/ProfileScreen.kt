@@ -37,6 +37,7 @@ import hu.klm60o.android.spiritrally2.presentation.userdata.UserDataViewModel
 import androidx.compose.runtime.getValue
 import hu.klm60o.android.spiritrally2.components.LoadingIndicator
 import hu.klm60o.android.spiritrally2.domain.model.Response
+import hu.klm60o.android.spiritrally2.presentation.userdata.components.AddUserDataFloatingActionButton
 import hu.klm60o.android.spiritrally2.presentation.userdata.components.EmptyUserDataContent
 import hu.klm60o.android.spiritrally2.presentation.userdata.components.UserDataContent
 import hu.klm60o.android.spiritrally2.useful.showToast
@@ -50,7 +51,8 @@ fun ProfileScreenComposable(navController: NavController, viewModel: UserDataVie
 
     Scaffold(
         bottomBar = { MyBottomAppbarComposable(navController) },
-        topBar = { MyTopAppBar() }
+        topBar = { MyTopAppBar() },
+        floatingActionButton = { AddUserDataFloatingActionButton() }
     ) { innerPadding ->
         Column(verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,

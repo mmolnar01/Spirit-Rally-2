@@ -16,6 +16,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
 import hu.klm60o.android.spiritrally2.components.MyAlertDialog
@@ -25,6 +26,7 @@ import hu.klm60o.android.spiritrally2.components.MyAlertDialog
 @Composable
 fun RequestNotificationPermissionDialog() {
     val permissionState = rememberPermissionState(permission = android.Manifest.permission.POST_NOTIFICATIONS)
+    //val test = rememberMultiplePermissionsState(permissions = listOf(android.Manifest.permission.POST_NOTIFICATIONS))
 
     if (!permissionState.status.isGranted) {
         if (permissionState.status.shouldShowRationale) {
