@@ -41,6 +41,7 @@ object AppModule {
     fun provideUserDateRepository(
         db: FirebaseFirestore
     ): UserDataRepository = UserDataRepositoryImpl(
-        userDataRef = db.collection("user_data")
+        userDataRef = db.collection("user_data"),
+        userId = Firebase.auth.uid.toString()
     )
 }

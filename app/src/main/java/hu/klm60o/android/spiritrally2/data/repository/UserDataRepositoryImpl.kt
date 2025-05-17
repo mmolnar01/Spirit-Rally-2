@@ -16,16 +16,18 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 
 class UserDataRepositoryImpl(
-    private val userDataRef: CollectionReference
+    private val userDataRef: CollectionReference,
+    private val userId: String
 ): UserDataRepository {
     override fun getUserDataFromFirestore() = callbackFlow {
         val snapshotListener = userDataRef.addSnapshotListener { snapshot, e ->
-            if (snapshot != null && !snapshot.isEmpty) {
+            val userDataResponse = if (snapshot != null) {
                 val userData = snapshot.toObjects(UserData::class.java)
-                trySend(Success(userData))
+                Response.Success(userData)
             } else {
-                trySend(Failure(e))
+                Response.Failure(e)
             }
+            trySend(userDataResponse)
         }
         awaitClose {
             snapshotListener.remove()
@@ -33,15 +35,14 @@ class UserDataRepositoryImpl(
     }
 
     override suspend fun addUserData(userData: Map<String, String>) = try {
-        userDataRef.add(userData).await()
+        userDataRef.document(userId).set(userData)
         Response.Success(Unit)
     } catch (e: Exception) {
         Response.Failure(e)
     }
 
     override suspend fun editUserData(userDataUpdates: Map<String, String>) = try {
-        val userDataId = userDataUpdates.getValue("id")
-        userDataRef.document(userDataId).update(userDataUpdates).await()
+        userDataRef.document(userId).update(userDataUpdates).await()
         Response.Success(Unit)
     } catch (e: Exception) {
         Response.Failure(e)

@@ -18,6 +18,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -26,22 +27,31 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import hu.klm60o.android.spiritrally2.AuthActivity
 import hu.klm60o.android.spiritrally2.presentation.userdata.UserDataViewModel
+import androidx.compose.runtime.getValue
+import hu.klm60o.android.spiritrally2.components.LoadingIndicator
+import hu.klm60o.android.spiritrally2.domain.model.Response
+import hu.klm60o.android.spiritrally2.presentation.userdata.components.EmptyUserDataContent
+import hu.klm60o.android.spiritrally2.presentation.userdata.components.UserDataContent
+import hu.klm60o.android.spiritrally2.useful.showToast
 
 @Composable
 fun ProfileScreenComposable(navController: NavController, viewModel: UserDataViewModel = hiltViewModel()) {
     val context = LocalContext.current
-    //val viewModel = viewModel
+    val userDataListResponse by viewModel.userDataListState.collectAsStateWithLifecycle()
+    val addUserDataResponse by viewModel.addUserDataState.collectAsStateWithLifecycle()
+    val editUserDataResponse by viewModel.editUserDataState.collectAsStateWithLifecycle()
+
     Scaffold(
         bottomBar = { MyBottomAppbarComposable(navController) },
         topBar = { MyTopAppBar() }
-    ) {
-        innerPadding ->
+    ) { innerPadding ->
         Column(verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
@@ -49,7 +59,41 @@ fun ProfileScreenComposable(navController: NavController, viewModel: UserDataVie
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
         ) {
-            Column(verticalArrangement = Arrangement.Center,
+            //UserData lekérdezése és listázása
+            when(val userDataListResponse = userDataListResponse) {
+                is Response.Idle -> {}
+                is Response.Loading -> LoadingIndicator()
+                is Response.Success -> userDataListResponse.data?.let { userDataList ->
+                    if (userDataList.isEmpty()) {
+                        EmptyUserDataContent(innerPadding = innerPadding)
+                    } else {
+                        UserDataContent(innerPadding = innerPadding)
+                    }
+                }
+                is Response.Failure -> userDataListResponse.e?.message?.let { errorMessage ->
+                    LaunchedEffect(errorMessage) {
+                        showToast(context, errorMessage)
+                    }
+                }
+            }
+
+            //UserData létrehozása
+            when(val addUserDataResponse = addUserDataResponse) {
+                is Response.Idle -> {}
+                is Response.Loading -> LoadingIndicator()
+                is Response.Success -> LaunchedEffect(Unit) {
+                    showToast(context, "Versenyző adatai hozzáadva")
+                    viewModel.resetAddUserDataState()
+                }
+                is Response.Failure -> addUserDataResponse.e?.message?.let { errorMessage ->
+                    LaunchedEffect(errorMessage) {
+                        showToast(context, errorMessage)
+                        viewModel.resetAddUserDataState()
+                    }
+                }
+            }
+
+            /*Column(verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxHeight()
@@ -120,7 +164,7 @@ fun ProfileScreenComposable(navController: NavController, viewModel: UserDataVie
                         fontSize = 20.sp
                     )
                 }
-            }
+            }*/
         }
 
     }

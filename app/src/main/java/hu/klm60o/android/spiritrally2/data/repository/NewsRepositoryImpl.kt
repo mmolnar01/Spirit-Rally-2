@@ -2,6 +2,7 @@ package hu.klm60o.android.spiritrally2.data.repository
 
 import com.google.firebase.firestore.CollectionReference
 import hu.klm60o.android.spiritrally2.domain.model.News
+import hu.klm60o.android.spiritrally2.domain.model.Response
 import hu.klm60o.android.spiritrally2.domain.model.Response.Failure
 import hu.klm60o.android.spiritrally2.domain.model.Response.Success
 import hu.klm60o.android.spiritrally2.domain.repository.NewsRepository
@@ -15,12 +16,13 @@ class NewsRepositoryImpl(
 ): NewsRepository {
     override fun getNewsFromFirestore() = callbackFlow {
         val snapshotListener = newsRef.addSnapshotListener { snapshot, e ->
-            if (snapshot != null && !snapshot.isEmpty) {
+            val newsResponse = if (snapshot != null) {
                 val news = snapshot.toObjects(News::class.java)
-                trySend(Success(news))
+                Response.Success(news)
             } else {
-                trySend(Failure(e))
+                Response.Failure(e)
             }
+            trySend(newsResponse)
         }
 
         awaitClose {
