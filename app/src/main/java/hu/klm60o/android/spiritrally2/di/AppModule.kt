@@ -11,7 +11,9 @@ import dagger.hilt.components.SingletonComponent
 import hu.klm60o.android.spiritrally2.data.repository.NewsRepositoryImpl
 import hu.klm60o.android.spiritrally2.domain.repository.RacepointRepository
 import hu.klm60o.android.spiritrally2.data.repository.RacepointsRepositoryImpl
+import hu.klm60o.android.spiritrally2.data.repository.UserDataRepositoryImpl
 import hu.klm60o.android.spiritrally2.domain.repository.NewsRepository
+import hu.klm60o.android.spiritrally2.domain.repository.UserDataRepository
 
 
 @Module
@@ -33,5 +35,12 @@ object AppModule {
         db: FirebaseFirestore
     ): NewsRepository = NewsRepositoryImpl(
         newsRef = db.collection("news")
+    )
+
+    @Provides
+    fun provideUserDateRepository(
+        db: FirebaseFirestore
+    ): UserDataRepository = UserDataRepositoryImpl(
+        userDataRef = db.collection("user_data")
     )
 }

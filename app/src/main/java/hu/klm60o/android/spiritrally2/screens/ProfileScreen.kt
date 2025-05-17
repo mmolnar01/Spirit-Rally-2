@@ -25,14 +25,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import hu.klm60o.android.spiritrally2.AuthActivity
+import hu.klm60o.android.spiritrally2.presentation.userdata.UserDataViewModel
 
 @Composable
-fun ProfileScreenComposable(navController: NavController) {
+fun ProfileScreenComposable(navController: NavController, viewModel: UserDataViewModel = hiltViewModel()) {
     val context = LocalContext.current
     //val viewModel = viewModel
     Scaffold(
@@ -73,6 +75,26 @@ fun ProfileScreenComposable(navController: NavController) {
                 OutlinedTextField(value = Firebase.auth.currentUser?.displayName.toString(), onValueChange = {},
                     label = {
                         Text("Csapatnév")
+                    },
+                    readOnly = true,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp)
+                )
+
+                OutlinedTextField(value = "Teszt", onValueChange = {},
+                    label = {
+                        Text("Rajtszám")
+                    },
+                    readOnly = true,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp)
+                )
+
+                OutlinedTextField(value = "Teszt", onValueChange = {},
+                    label = {
+                        Text("Kategória")
                     },
                     readOnly = true,
                     modifier = Modifier
