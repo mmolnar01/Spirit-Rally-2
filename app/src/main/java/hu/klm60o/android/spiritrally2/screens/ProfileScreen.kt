@@ -1,5 +1,7 @@
 package hu.klm60o.android.spiritrally2.screens
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -118,7 +120,8 @@ fun ProfileScreenComposable(navController: NavController, viewModel: UserDataVie
                 }
                 is Response.Failure -> userDataListResponse.e?.message?.let { errorMessage ->
                     LaunchedEffect(errorMessage) {
-                        showToast(context, errorMessage)
+                        //showToast(context, errorMessage)
+                        Log.e(TAG, "ProfileScreen userDataListResponse Hiba: $errorMessage")
                     }
                 }
             }

@@ -1,44 +1,28 @@
 package hu.klm60o.android.spiritrally2.screens
 
-import android.Manifest
-import android.content.pm.PackageManager
-import android.icu.util.TimeUnit
-import android.os.Build
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import hu.klm60o.android.spiritrally2.presentation.news.NewsViewModel
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.unit.dp
-import androidx.core.app.ActivityCompat
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.Priority
 import hu.klm60o.android.spiritrally2.components.LoadingIndicator
 import hu.klm60o.android.spiritrally2.domain.model.Response
-import hu.klm60o.android.spiritrally2.permissions.RequestCameraAndLocationPermissionDialog
-import hu.klm60o.android.spiritrally2.permissions.RequestNotificationPermissionDialog
+import hu.klm60o.android.spiritrally2.presentation.news.NewsViewModel
 import hu.klm60o.android.spiritrally2.presentation.news.components.EmptyNewsListContent
 import hu.klm60o.android.spiritrally2.presentation.news.components.NewsListContent
-import hu.klm60o.android.spiritrally2.presentation.userdata.components.SetUserLocation
 import hu.klm60o.android.spiritrally2.useful.showToast
 
 @Composable

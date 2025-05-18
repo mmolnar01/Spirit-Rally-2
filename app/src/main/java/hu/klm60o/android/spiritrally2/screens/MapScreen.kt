@@ -1,6 +1,9 @@
 package hu.klm60o.android.spiritrally2.screens
 
+import android.content.ContentValues.TAG
 import android.graphics.drawable.Drawable
+import android.nfc.Tag
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -196,6 +199,7 @@ fun MapScreenComposable(navController: NavController, viewModel: RacepointsViewM
                 is Response.Failure -> racepointsResponse.e?.message?.let { errorMessage ->
                     LaunchedEffect(errorMessage) {
                         showToast(context, errorMessage)
+                        Log.e(TAG, "MapScreen racepointsResponse Hiba: $errorMessage")
                     }
                 }
             }

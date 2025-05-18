@@ -88,7 +88,6 @@ fun EmptyUserDataContent(innerPadding: PaddingValues) {
             context.startActivity(Intent(context, AuthActivity::class.java))
             val activity = context as? Activity
             activity?.finish()
-
         },
             modifier = Modifier
                 .fillMaxWidth()

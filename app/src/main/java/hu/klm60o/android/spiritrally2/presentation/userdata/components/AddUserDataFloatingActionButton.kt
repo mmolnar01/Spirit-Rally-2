@@ -58,7 +58,7 @@ fun AddUserDataFloatingActionButton(
                 //showToast(context, ints[0].toString())
             } catch (e: Exception) {
                 showToast(context, e.toString())
-                Log.e(TAG, e.toString())
+                Log.e(TAG, "AddUserDataFloatinActionButton Hiba: $e")
             }
         }
     }
