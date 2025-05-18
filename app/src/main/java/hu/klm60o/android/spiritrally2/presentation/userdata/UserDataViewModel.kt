@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import hu.klm60o.android.spiritrally2.domain.model.Response
+import hu.klm60o.android.spiritrally2.domain.model.UserData
 import hu.klm60o.android.spiritrally2.domain.repository.AddUserDataResponse
 import hu.klm60o.android.spiritrally2.domain.repository.EditUserDataResponse
 import hu.klm60o.android.spiritrally2.domain.repository.UserDataListResponse
@@ -37,7 +38,7 @@ class UserDataViewModel @Inject constructor(
         }
     }
 
-    fun addUserData(userData: Map<String, String>) = viewModelScope.launch {
+    fun addUserData(userData: UserData) = viewModelScope.launch {
         _addUserDataState.value = Response.Loading
         _addUserDataState.value = repo.addUserData(userData)
     }

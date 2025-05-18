@@ -23,6 +23,7 @@ import hu.klm60o.android.spiritrally2.presentation.news.NewsViewModel
 import androidx.compose.runtime.getValue
 import hu.klm60o.android.spiritrally2.components.LoadingIndicator
 import hu.klm60o.android.spiritrally2.domain.model.Response
+import hu.klm60o.android.spiritrally2.permissions.RequestCameraAndLocationPermissionDialog
 import hu.klm60o.android.spiritrally2.permissions.RequestNotificationPermissionDialog
 import hu.klm60o.android.spiritrally2.presentation.news.components.EmptyNewsListContent
 import hu.klm60o.android.spiritrally2.presentation.news.components.NewsListContent
@@ -36,6 +37,7 @@ fun NewsScreenComposable(navController: NavController, viewModel: NewsViewModel 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         RequestNotificationPermissionDialog()
     }
+    RequestCameraAndLocationPermissionDialog()
 
     Scaffold(
         bottomBar = { MyBottomAppbarComposable(navController) },

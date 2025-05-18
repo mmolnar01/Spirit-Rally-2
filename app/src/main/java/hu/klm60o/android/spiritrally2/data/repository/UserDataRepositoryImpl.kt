@@ -34,7 +34,7 @@ class UserDataRepositoryImpl(
         }
     }
 
-    override suspend fun addUserData(userData: Map<String, String>) = try {
+    override suspend fun addUserData(userData: UserData) = try {
         userDataRef.document(userId).set(userData)
         Response.Success(Unit)
     } catch (e: Exception) {
@@ -42,6 +42,7 @@ class UserDataRepositoryImpl(
     }
 
     override suspend fun editUserData(userDataUpdates: Map<String, String>) = try {
+        val test = userDataUpdates.getValue("id")
         userDataRef.document(userId).update(userDataUpdates).await()
         Response.Success(Unit)
     } catch (e: Exception) {

@@ -9,7 +9,7 @@ import com.google.firebase.firestore.GeoPoint
 //3. ATV
 //4. Minimál
 data class UserData(
-    var id: Int? = null,
+    var id: String? = null,
     var number: Int? = null,
     var category: Int? = null,
     var location: GeoPoint? = null,

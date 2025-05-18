@@ -35,8 +35,11 @@ import com.google.firebase.ktx.Firebase
 import hu.klm60o.android.spiritrally2.AuthActivity
 import hu.klm60o.android.spiritrally2.presentation.userdata.UserDataViewModel
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import hu.klm60o.android.spiritrally2.components.LoadingIndicator
 import hu.klm60o.android.spiritrally2.domain.model.Response
+import hu.klm60o.android.spiritrally2.domain.model.UserData
 import hu.klm60o.android.spiritrally2.presentation.userdata.components.AddUserDataFloatingActionButton
 import hu.klm60o.android.spiritrally2.presentation.userdata.components.EmptyUserDataContent
 import hu.klm60o.android.spiritrally2.presentation.userdata.components.UserDataContent
@@ -49,10 +52,12 @@ fun ProfileScreenComposable(navController: NavController, viewModel: UserDataVie
     val addUserDataResponse by viewModel.addUserDataState.collectAsStateWithLifecycle()
     val editUserDataResponse by viewModel.editUserDataState.collectAsStateWithLifecycle()
 
+    val currentUserData = remember { mutableStateOf<UserData>(UserData()) }
+
     Scaffold(
         bottomBar = { MyBottomAppbarComposable(navController) },
         topBar = { MyTopAppBar() },
-        floatingActionButton = { AddUserDataFloatingActionButton() }
+        floatingActionButton = { AddUserDataFloatingActionButton(onAddUserData = viewModel::addUserData) }
     ) { innerPadding ->
         Column(verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -69,7 +74,11 @@ fun ProfileScreenComposable(navController: NavController, viewModel: UserDataVie
                     if (userDataList.isEmpty()) {
                         EmptyUserDataContent(innerPadding = innerPadding)
                     } else {
-                        UserDataContent(innerPadding = innerPadding)
+                        //Ez nem túl jó
+                        //De megkeressük a listában a jelenlegi felhasználó elemét
+                        //Aztán átadjuk a UserDataContent-nek
+                        currentUserData.value = userDataList.firstOrNull { it.id == Firebase.auth.currentUser?.uid }!!
+                        UserDataContent(innerPadding = innerPadding, currentUserData = currentUserData.value)
                     }
                 }
                 is Response.Failure -> userDataListResponse.e?.message?.let { errorMessage ->

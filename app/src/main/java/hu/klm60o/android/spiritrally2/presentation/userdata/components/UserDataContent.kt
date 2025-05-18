@@ -25,9 +25,10 @@ import androidx.compose.ui.unit.sp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import hu.klm60o.android.spiritrally2.AuthActivity
+import hu.klm60o.android.spiritrally2.domain.model.UserData
 
 @Composable
-fun UserDataContent(innerPadding: PaddingValues) {
+fun UserDataContent(innerPadding: PaddingValues, currentUserData: UserData) {
     val context = LocalContext.current
 
     Column(verticalArrangement = Arrangement.Center,
@@ -63,7 +64,7 @@ fun UserDataContent(innerPadding: PaddingValues) {
                 .padding(10.dp)
         )
 
-        OutlinedTextField(value = "Teszt", onValueChange = {},
+        OutlinedTextField(value = currentUserData.number.toString(), onValueChange = {},
             label = {
                 Text("Rajtszám")
             },
@@ -73,7 +74,7 @@ fun UserDataContent(innerPadding: PaddingValues) {
                 .padding(10.dp)
         )
 
-        OutlinedTextField(value = "Teszt", onValueChange = {},
+        OutlinedTextField(value = currentUserData.category.toString(), onValueChange = {},
             label = {
                 Text("Kategória")
             },

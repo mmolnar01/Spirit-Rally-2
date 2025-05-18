@@ -63,7 +63,7 @@ fun EmptyUserDataContent(innerPadding: PaddingValues) {
                 .padding(10.dp)
         )
 
-        OutlinedTextField(value = "Teszt", onValueChange = {},
+        OutlinedTextField(value = "-", onValueChange = {},
             label = {
                 Text("Rajtszám")
             },
@@ -73,7 +73,7 @@ fun EmptyUserDataContent(innerPadding: PaddingValues) {
                 .padding(10.dp)
         )
 
-        OutlinedTextField(value = "Teszt", onValueChange = {},
+        OutlinedTextField(value = "-", onValueChange = {},
             label = {
                 Text("Kategória")
             },

@@ -11,7 +11,7 @@ typealias EditUserDataResponse = Response<Unit>
 interface UserDataRepository {
     fun getUserDataFromFirestore(): Flow<UserDataListResponse>
 
-    suspend fun addUserData(userData: Map<String, String>): AddUserDataResponse
+    suspend fun addUserData(userData: UserData): AddUserDataResponse
 
     suspend fun editUserData(userDataUpdates: Map<String, String>): EditUserDataResponse
 }
