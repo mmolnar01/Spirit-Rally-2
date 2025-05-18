@@ -47,7 +47,7 @@ class UserDataViewModel @Inject constructor(
         _addUserDataState.value = Response.Idle
     }
 
-    fun editUserData(userDataUpdates: Map<String, String>) = viewModelScope.launch {
+    fun editUserData(userDataUpdates: Map<String, Any>) = viewModelScope.launch {
         _editUserDataState.value = Response.Loading
         _editUserDataState.value = repo.editUserData(userDataUpdates)
     }

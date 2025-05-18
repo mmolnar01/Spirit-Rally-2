@@ -13,5 +13,5 @@ interface UserDataRepository {
 
     suspend fun addUserData(userData: UserData): AddUserDataResponse
 
-    suspend fun editUserData(userDataUpdates: Map<String, String>): EditUserDataResponse
+    suspend fun editUserData(userDataUpdates: Map<String, Any>): EditUserDataResponse
 }

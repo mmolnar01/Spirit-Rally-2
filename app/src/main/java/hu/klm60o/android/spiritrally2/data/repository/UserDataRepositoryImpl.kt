@@ -41,7 +41,7 @@ class UserDataRepositoryImpl(
         Response.Failure(e)
     }
 
-    override suspend fun editUserData(userDataUpdates: Map<String, String>) = try {
+    override suspend fun editUserData(userDataUpdates: Map<String, Any>) = try {
         val test = userDataUpdates.getValue("id")
         userDataRef.document(userId).update(userDataUpdates).await()
         Response.Success(Unit)

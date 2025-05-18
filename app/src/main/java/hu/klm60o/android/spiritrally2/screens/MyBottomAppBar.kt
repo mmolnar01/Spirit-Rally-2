@@ -24,10 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import hu.klm60o.android.spiritrally2.MapScreen
-import hu.klm60o.android.spiritrally2.NewsScreen
-import hu.klm60o.android.spiritrally2.ProfileScreen
-import hu.klm60o.android.spiritrally2.ResultScreen
 
 @Composable
 fun MyBottomAppbarComposable(navController: NavController) {
@@ -113,66 +109,8 @@ fun MyBottomAppbarComposable(navController: NavController) {
                 )
             }
         }
-        /*floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    //checkCameraPermission(context)
-                    //navController.navigate(NewsScreen)
-                    //navController.navigate(ResultScreen)
-                },
-                containerColor = BottomAppBarDefaults.containerColor,
-                elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(10.dp, 15.dp, 15.dp,15.dp)
-            ) {
-                Icon(QrCode, contentDescription = "Read QR code")
-            }
-        }*/
+    })
 }
-    )
-}
-
-/*fun checkCameraPermission(context: Context) {
-    if ((ContextCompat.checkSelfPermission(
-            context,
-            Manifest.permission.CAMERA
-        ) == PackageManager.PERMISSION_GRANTED)
-        && (ContextCompat.checkSelfPermission(
-            context,
-            Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED)
-    ) {
-        (context as MainActivity).showCamera()
-    }
-    else if (shouldShowRequestPermissionRationale((context as MainActivity), Manifest.permission.CAMERA)) {
-        showToast(context, "Kamera jogosultság szükséges")
-        //context.requestPermissionLauncher.launch(Manifest.permission.CAMERA)
-        context.requestPermissionLauncher2.launch(
-            arrayOf(
-                Manifest.permission.CAMERA,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-        )
-    }
-    else if (shouldShowRequestPermissionRationale((context as MainActivity), Manifest.permission.ACCESS_FINE_LOCATION)) {
-        showToast(context, "Helymeghatározás jogosultság szükséges")
-        //context.requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-        context.requestPermissionLauncher2.launch(
-            arrayOf(
-                Manifest.permission.CAMERA,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-        )
-    }
-    else {
-        //context.requestPermissionLauncher.launch(Manifest.permission.CAMERA)
-        //context.requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-        context.requestPermissionLauncher2.launch(
-            arrayOf(
-                Manifest.permission.CAMERA,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-        )
-    }
-}*/
 
 @Preview(showBackground = true)
 @Composable

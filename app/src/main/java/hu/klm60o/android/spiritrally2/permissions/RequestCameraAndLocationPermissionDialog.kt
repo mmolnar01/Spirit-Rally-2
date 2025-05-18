@@ -35,7 +35,7 @@ fun CameraAndLocationRationaleDialog() {
 
     if (showWarningDialog) {
         MyAlertDialog(
-            onConfirmation = { showWarningDialog = false},
+            onConfirmation = { showWarningDialog = false },
             onDismissRequest = {},
             dialogTitle = "Jogosultság engedélyezése",
             dialogText = "Kérem engedélyezze az Értesítés jogosultságokat a beállításokban",
