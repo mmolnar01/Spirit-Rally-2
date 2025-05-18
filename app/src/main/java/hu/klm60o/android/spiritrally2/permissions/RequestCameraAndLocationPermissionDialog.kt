@@ -1,0 +1,78 @@
+package hu.klm60o.android.spiritrally2.permissions
+
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
+import hu.klm60o.android.spiritrally2.components.MyAlertDialog
+
+@OptIn(ExperimentalPermissionsApi::class)
+@Composable
+fun RequestCameraAndLocationPermissionDialog() {
+    val permissionsState = rememberMultiplePermissionsState(listOf(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.CAMERA))
+
+    if (!permissionsState.allPermissionsGranted) {
+        if (permissionsState.shouldShowRationale) {
+            CameraAndLocationRationaleDialog()
+        } else {
+            CameraAndLocationPermissionDialog { permissionsState.launchMultiplePermissionRequest() }
+        }
+    }
+}
+
+@Composable
+fun CameraAndLocationRationaleDialog() {
+    var showWarningDialog by remember { mutableStateOf(true) }
+
+    if (showWarningDialog) {
+        MyAlertDialog(
+            onConfirmation = { showWarningDialog = false},
+            onDismissRequest = {},
+            dialogTitle = "Jogosultság engedélyezése",
+            dialogText = "Kérem engedélyezze az Értesítés jogosultságokat a beállításokban",
+            icon = Icons.Filled.Info
+        )
+    }
+}
+
+
+@Composable
+fun CameraAndLocationPermissionDialog(onRequestPermission: () -> Unit) {
+    var showWarningDialog by remember { mutableStateOf(true) }
+
+    if (showWarningDialog) {
+        AlertDialog(
+            icon = {
+                Icon(Icons.Filled.Info, contentDescription = "Pop-up Icon")
+            },
+            title = {
+                Text(text = "Jogosultság engedélyezése")
+            },
+            text = {
+                Text(text = "Kérlek engedélyezd a felugró jogosultságokat")
+            },
+            onDismissRequest = {
+
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        onRequestPermission()
+                        showWarningDialog = false
+                    }
+                ) {
+                    Text("OK")
+                }
+            }
+        )
+    }
+}
