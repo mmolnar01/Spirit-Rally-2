@@ -46,7 +46,7 @@ fun SpiritRallyMainScreen() {
             mutableStateOf<LocationRequest?>(null)
         }
 
-        locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 10000).build()
+        locationRequest = LocationRequest.Builder(Priority.PRIORITY_BALANCED_POWER_ACCURACY, 10000).build()
 
         if (locationRequest != null) {
             if (ActivityCompat.checkSelfPermission(
