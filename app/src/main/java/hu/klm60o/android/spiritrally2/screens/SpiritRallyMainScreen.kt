@@ -5,6 +5,11 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -26,6 +31,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.Priority
+import hu.klm60o.android.spiritrally2.navigation.NavigationItem
 import hu.klm60o.android.spiritrally2.presentation.userdata.components.SetUserLocation
 import hu.klm60o.android.spiritrally2.useful.showToast
 
@@ -34,14 +40,32 @@ fun SpiritRallyMainScreen() {
     val navController = rememberNavController()
     val context = LocalContext.current
     var locationTrackingChecked by rememberSaveable { mutableStateOf(false) }
+    val navigationItems = listOf(
+        NavigationItem(
+            title = "Hírek",
+            icon = Icons.Default.Notifications,
+            route = NewsScreen
+        ),
+        NavigationItem(
+            title = "Térkép",
+            icon = Icons.Default.LocationOn,
+            route = MapScreen
+        ),
+        NavigationItem(
+            title = "Eredmények",
+            icon = Icons.Default.Info,
+            route = ResultScreen
+        ),
+        NavigationItem(
+            title = "Profil",
+            icon = Icons.Default.Person,
+            route = ProfileScreen
+        )
+    )
     Scaffold(
-        bottomBar = { MyBottomAppbarComposable(navController) },
+        bottomBar = { MyBottomAppbarComposable(navController, navigationItems) },
         topBar = { MyTopAppBar() }
     ) { innerPadding ->
-        /*Switch(
-            checked = locationTrackingChecked,
-            onCheckedChange = { locationTrackingChecked = it }
-        )*/
         //Jogosultságok lekérdezése
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             RequestNotificationPermissionDialog()
