@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
@@ -20,6 +21,7 @@ import kotlinx.serialization.Serializable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.LocationRequest
@@ -31,11 +33,15 @@ import hu.klm60o.android.spiritrally2.useful.showToast
 fun SpiritRallyMainScreen() {
     val navController = rememberNavController()
     val context = LocalContext.current
+    var locationTrackingChecked by rememberSaveable { mutableStateOf(false) }
     Scaffold(
         bottomBar = { MyBottomAppbarComposable(navController) },
         topBar = { MyTopAppBar() }
     ) { innerPadding ->
-
+        /*Switch(
+            checked = locationTrackingChecked,
+            onCheckedChange = { locationTrackingChecked = it }
+        )*/
         //Jogosultságok lekérdezése
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             RequestNotificationPermissionDialog()
@@ -48,7 +54,7 @@ fun SpiritRallyMainScreen() {
 
         locationRequest = LocationRequest.Builder(Priority.PRIORITY_BALANCED_POWER_ACCURACY, 10000).build()
 
-        if (locationRequest != null) {
+        if (locationRequest != null && locationTrackingChecked) {
             if (ActivityCompat.checkSelfPermission(
                     context,
                     Manifest.permission.ACCESS_FINE_LOCATION
@@ -91,7 +97,7 @@ fun SpiritRallyMainScreen() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ProfileScreenComposable(navController = navController)
+                    ProfileScreenComposable(navController = navController, checked = locationTrackingChecked) { locationTrackingChecked = it }
                 }
             }
         }

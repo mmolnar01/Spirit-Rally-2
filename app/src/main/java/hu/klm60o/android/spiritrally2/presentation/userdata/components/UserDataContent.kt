@@ -5,15 +5,21 @@ import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,14 +34,19 @@ import hu.klm60o.android.spiritrally2.AuthActivity
 import hu.klm60o.android.spiritrally2.domain.model.UserData
 
 @Composable
-fun UserDataContent(innerPadding: PaddingValues, currentUserData: UserData) {
+fun UserDataContent(
+    innerPadding: PaddingValues,
+    currentUserData: UserData,
+    checked: Boolean,
+    onChecked: (Boolean) -> Unit
+) {
     val context = LocalContext.current
 
-    Column(verticalArrangement = Arrangement.Center,
+    Column(verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxHeight()
-            .padding(20.dp)
+            .padding(5.dp)
     ) {
         Icon(
             Icons.Filled.Person, contentDescription = "Profile Icon",
@@ -83,6 +94,29 @@ fun UserDataContent(innerPadding: PaddingValues, currentUserData: UserData) {
                 .fillMaxWidth()
                 .padding(10.dp)
         )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .padding(5.dp)
+        ) {
+            Text(
+                modifier = Modifier
+                    .padding(5.dp),
+                text = "Helyzet folyamatos mentése")
+            Switch(
+                checked = checked,
+                onCheckedChange = onChecked,
+                thumbContent = {
+                    if (checked) {
+                        Icon(
+                            imageVector = Icons.Filled.Check,
+                            contentDescription = null,
+                            modifier = Modifier.size(SwitchDefaults.IconSize)
+                        )
+                    }
+                }
+            )
+        }
 
         OutlinedButton(onClick = {
             Firebase.auth.signOut()
@@ -92,13 +126,13 @@ fun UserDataContent(innerPadding: PaddingValues, currentUserData: UserData) {
         },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(10.dp)) {
+                .padding(75.dp, 10.dp, 75.dp)) {
             Text(text = "Kijelentkezés",
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(5.dp),
                 textAlign = TextAlign.Center,
-                fontSize = 20.sp
+                fontSize = 15.sp
             )
         }
     }

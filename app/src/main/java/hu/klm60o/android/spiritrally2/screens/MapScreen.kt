@@ -4,6 +4,7 @@ import android.content.ContentValues.TAG
 import android.graphics.drawable.Drawable
 import android.nfc.Tag
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,7 +12,10 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -24,6 +28,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
@@ -39,6 +45,7 @@ import hu.klm60o.android.spiritrally2.domain.model.Response
 import hu.klm60o.android.spiritrally2.presentation.racepoints.RacepointsViewModel
 import hu.klm60o.android.spiritrally2.presentation.racepoints.components.EmptyRacepointListContent
 import hu.klm60o.android.spiritrally2.presentation.racepoints.components.RacepointListContent
+import hu.klm60o.android.spiritrally2.presentation.userdata.UserDataViewModel
 import hu.klm60o.android.spiritrally2.useful.getDistanceFromGeoPoints
 import hu.klm60o.android.spiritrally2.useful.getDistanceFromLatLonInKm
 import hu.klm60o.android.spiritrally2.useful.getGeoPointsFromGpx
@@ -50,8 +57,14 @@ import java.io.IOException
 import java.io.InputStream
 
 @Composable
-fun MapScreenComposable(navController: NavController, viewModel: RacepointsViewModel = hiltViewModel(), innerPadding: PaddingValues) {
-    val racepointsResponse by viewModel.racepointsState.collectAsStateWithLifecycle()
+fun MapScreenComposable(
+    navController: NavController,
+    racepointsViewModel: RacepointsViewModel = hiltViewModel(),
+    userDataViewModel: UserDataViewModel = hiltViewModel(),
+    innerPadding: PaddingValues
+) {
+    val racepointsResponse by racepointsViewModel.racepointsState.collectAsStateWithLifecycle()
+    val userDataListResponse by userDataViewModel.userDataListState.collectAsStateWithLifecycle()
 
     val context = LocalContext.current
     val geoPoints = getGeoPointsFromGpx(context, "tabaliget.gpx")
@@ -64,81 +77,22 @@ fun MapScreenComposable(navController: NavController, viewModel: RacepointsViewM
         mutableStateOf(context.getDrawable(R.drawable.map_marker_green))
     }
 
-    /*Scaffold(
-        bottomBar = { MyBottomAppbarComposable(navController) },
-        topBar = { MyTopAppBar() }
-    ) { innerPadding ->
-        Column(verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxHeight()
-                .fillMaxWidth()
-                .padding(innerPadding)
-        ) {
+    val carIcon: Drawable? by remember {
+        mutableStateOf(ContextCompat.getDrawable(context, R.drawable.car_icon))
+    }
 
-            var cameraState by remember {
-                mutableStateOf(
-                    CameraState(
-                        CameraProperty(
-                            geoPoint = GeoPoint(47.3645399756769, 18.863085071980695),
-                            zoom = 12.0
-                        )
-                    )
-                )
-            }
+    val motorcycleIcon: Drawable? by remember {
+        mutableStateOf(ContextCompat.getDrawable(context, R.drawable.motorcycle_icon))
+    }
 
-            LaunchedEffect(cameraState.zoom) {
-                val zoom = cameraState.zoom
-                val geoPoint = cameraState.geoPoint
-                cameraState = CameraState(
-                    CameraProperty(
-                        geoPoint = geoPoint,
-                        zoom = zoom
-                    )
-                )
-            }
+    val atvIcon: Drawable? by remember {
+        mutableStateOf(ContextCompat.getDrawable(context, R.drawable.atv_icon))
+    }
 
-            // add node
-            OpenStreetMap(
-                modifier = Modifier.fillMaxSize(),
-                cameraState = cameraState
-            ) {
-                when(val racepointsResponse = racepointsResponse) {
-                    is Response.Idle -> {}
-                    is Response.Loading -> {}
-                    is Response.Success -> racepointsResponse.data?.let { racepointsList ->
-                        if (racepointsList.isEmpty()) {
-                            //EmptyRacepointListContent(innerPadding = innerPadding)
-                        } else {
-                            racepointsList.forEach { racepoint ->
-                                if (racepoint.timestamp != null) {
-                                    Marker(
-                                        state = rememberMarkerState(geoPoint = GeoPoint(racepoint.location!!.latitude, racepoint.location!!.longitude)),
-                                        icon = greenIcon
-                                    )
-                                } else {
-                                    Marker(
-                                        state = rememberMarkerState(geoPoint = GeoPoint(racepoint.location!!.latitude, racepoint.location!!.longitude)),
-                                        icon = redIcon
-                                    )
-                                }
-                            }
-                        }
-                    }
-                    is Response.Failure -> racepointsResponse.e?.message?.let { errorMessage ->
-                        LaunchedEffect(errorMessage) {
-                            showToast(context, errorMessage)
-                        }
-                    }
-                }
+    val minimalIcon: Drawable? by remember {
+        mutableStateOf(ContextCompat.getDrawable(context, R.drawable.minimal_icon))
+    }
 
-                com.utsman.osmandcompose.Polyline(
-                    geoPoints = geoPoints,
-                    color = Color.Blue
-                )
-            }
-        }
-    }*/
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -197,10 +151,67 @@ fun MapScreenComposable(navController: NavController, viewModel: RacepointsViewM
                     }
                 }
                 is Response.Failure -> racepointsResponse.e?.message?.let { errorMessage ->
-                    LaunchedEffect(errorMessage) {
-                        showToast(context, errorMessage)
-                        Log.e(TAG, "MapScreen racepointsResponse Hiba: $errorMessage")
+                    showToast(context, errorMessage)
+                    Log.e(TAG, "MapScreen racepointsResponse Hiba: $errorMessage")
+                }
+            }
+
+            when(val userDataListResponse = userDataListResponse) {
+                is Response.Idle -> {}
+                is Response.Loading -> {}
+                is Response.Success -> userDataListResponse.data?.let { userDataList ->
+                    if (userDataList.isEmpty()) {
+
+                    } else {
+                        userDataList.forEach { userData ->
+                            if (userData.location != null) {
+                                Marker(
+                                    state = rememberMarkerState(geoPoint = GeoPoint(userData.location!!.latitude, userData.location!!.longitude)),
+                                    icon = carIcon,
+                                    title = "TESZTELÉS",
+                                    snippet = "BLABLABLA"
+                                ) {
+                                    Text(text = it.title)
+                                }
+                                /*when (userData.category) {
+                                    1 -> Marker(
+                                        state = rememberMarkerState(geoPoint = GeoPoint(userData.location!!.latitude, userData.location!!.longitude)),
+                                        icon = carIcon,
+                                        title = "TESZTELÉS"
+                                    ) {
+                                        Column(
+                                            modifier = Modifier
+                                                .size(100.dp)
+                                                .background(color = Color.Gray, shape = RoundedCornerShape(7.dp)),
+                                            verticalArrangement = Arrangement.Center,
+                                            horizontalAlignment = Alignment.CenterHorizontally
+                                        ) {
+                                            Text(text = it.title)
+                                        }
+                                    }
+                                    2 -> Marker(
+                                        state = rememberMarkerState(geoPoint = GeoPoint(userData.location!!.latitude, userData.location!!.longitude)),
+                                        icon = motorcycleIcon,
+                                        title = userData.number.toString()
+                                    )
+                                    3 -> Marker(
+                                        state = rememberMarkerState(geoPoint = GeoPoint(userData.location!!.latitude, userData.location!!.longitude)),
+                                        icon = atvIcon,
+                                        title = userData.number.toString()
+                                    )
+                                    4 -> Marker(
+                                        state = rememberMarkerState(geoPoint = GeoPoint(userData.location!!.latitude, userData.location!!.longitude)),
+                                        icon = minimalIcon,
+                                        title = userData.number.toString()
+                                    )
+                                }*/
+                            }
+                        }
                     }
+                }
+                is Response.Failure -> userDataListResponse.e?.message?.let { errorMessage ->
+                    showToast(context, errorMessage)
+                    Log.e(TAG, "MapScreen racepointsResponse Hiba: $errorMessage")
                 }
             }
 

@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
@@ -34,7 +35,12 @@ import hu.klm60o.android.spiritrally2.presentation.userdata.components.UserDataC
 import hu.klm60o.android.spiritrally2.useful.showToast
 
 @Composable
-fun ProfileScreenComposable(navController: NavController, viewModel: UserDataViewModel = hiltViewModel()) {
+fun ProfileScreenComposable(
+    navController: NavController,
+    viewModel: UserDataViewModel = hiltViewModel(),
+    checked: Boolean,
+    onChecked: (Boolean) -> Unit
+) {
     val context = LocalContext.current
     val userDataListResponse by viewModel.userDataListState.collectAsStateWithLifecycle()
     val addUserDataResponse by viewModel.addUserDataState.collectAsStateWithLifecycle()
@@ -42,65 +48,14 @@ fun ProfileScreenComposable(navController: NavController, viewModel: UserDataVie
 
     val currentUserData = remember { mutableStateOf<UserData>(UserData()) }
 
-    /*Scaffold(
-        bottomBar = { MyBottomAppbarComposable(navController) },
-        topBar = { MyTopAppBar() },
-        floatingActionButton = { AddUserDataFloatingActionButton(onAddUserData = viewModel::addUserData) }
-    ) { innerPadding ->
-        Column(verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxHeight()
-                .padding(innerPadding)
-                .verticalScroll(rememberScrollState())
-        ) {
-            //UserData lekérdezése és listázása
-            when(val userDataListResponse = userDataListResponse) {
-                is Response.Idle -> {}
-                is Response.Loading -> LoadingIndicator()
-                is Response.Success -> userDataListResponse.data?.let { userDataList ->
-                    if (userDataList.isEmpty()) {
-                        EmptyUserDataContent(innerPadding = innerPadding)
-                    } else {
-                        //Ez nem túl jó
-                        //De megkeressük a listában a jelenlegi felhasználó elemét
-                        //Aztán átadjuk a UserDataContent-nek
-                        currentUserData.value = userDataList.firstOrNull { it.id == Firebase.auth.currentUser?.uid }!!
-                        UserDataContent(innerPadding = innerPadding, currentUserData = currentUserData.value)
-                    }
-                }
-                is Response.Failure -> userDataListResponse.e?.message?.let { errorMessage ->
-                    LaunchedEffect(errorMessage) {
-                        showToast(context, errorMessage)
-                    }
-                }
-            }
-
-            //UserData létrehozása
-            when(val addUserDataResponse = addUserDataResponse) {
-                is Response.Idle -> {}
-                is Response.Loading -> LoadingIndicator()
-                is Response.Success -> LaunchedEffect(Unit) {
-                    showToast(context, "Versenyző adatai hozzáadva")
-                    viewModel.resetAddUserDataState()
-                }
-                is Response.Failure -> addUserDataResponse.e?.message?.let { errorMessage ->
-                    LaunchedEffect(errorMessage) {
-                        showToast(context, errorMessage)
-                        viewModel.resetAddUserDataState()
-                    }
-                }
-            }
-        }
-    }*/
     Scaffold(
         floatingActionButton = { AddUserDataFloatingActionButton(onAddUserData = viewModel::addUserData) }
     ) { innerPadding ->
-        Column(verticalArrangement = Arrangement.Center,
+        Column(verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxHeight()
-                .padding(innerPadding)
+                .padding(5.dp)
                 .verticalScroll(rememberScrollState())
         ) {
             //UserData lekérdezése és listázása
@@ -111,11 +66,19 @@ fun ProfileScreenComposable(navController: NavController, viewModel: UserDataVie
                     if (userDataList.isEmpty()) {
                         EmptyUserDataContent(innerPadding = innerPadding)
                     } else {
-                        //Ez nem túl jó
+                        //Ez egy szar így
+                        //UserViewModel-be kéne tenni hogy lekérdezi a jelenlegi felhasználó adatait külön
                         //De megkeressük a listában a jelenlegi felhasználó elemét
                         //Aztán átadjuk a UserDataContent-nek
-                        currentUserData.value = userDataList.firstOrNull { it.id == Firebase.auth.currentUser?.uid }!!
-                        UserDataContent(innerPadding = innerPadding, currentUserData = currentUserData.value)
+                        val userData = userDataList.firstOrNull { it.id == Firebase.auth.currentUser?.uid }
+                        if (userData != null) {
+                            currentUserData.value = userData
+                            UserDataContent(innerPadding = innerPadding, currentUserData = currentUserData.value, checked = checked) { onChecked(it) }
+                        } else {
+                            EmptyUserDataContent(innerPadding = innerPadding)
+                        }
+                        //currentUserData.value = userDataList.firstOrNull { it.id == Firebase.auth.currentUser?.uid }!!
+                        //UserDataContent(innerPadding = innerPadding, currentUserData = currentUserData.value, checked = checked) { onChecked(it) }
                     }
                 }
                 is Response.Failure -> userDataListResponse.e?.message?.let { errorMessage ->
@@ -145,12 +108,13 @@ fun ProfileScreenComposable(navController: NavController, viewModel: UserDataVie
     }
 }
 
-@Preview(showBackground = true)
+/*@Preview(showBackground = true)
 @Composable
 fun ProfilePreview() {
     hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme {
         ProfileScreenComposable(
-            navController = rememberNavController()
+            navController = rememberNavController(),
+            checked = false
         )
     }
 }
@@ -160,7 +124,8 @@ fun ProfilePreview() {
 fun ProfilePreviewDark() {
     hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme(darkTheme = true) {
         ProfileScreenComposable(
-            navController = rememberNavController()
+            navController = rememberNavController(),
+            checked = false
         )
     }
-}
+}*/

@@ -27,7 +27,10 @@ import com.google.firebase.ktx.Firebase
 import hu.klm60o.android.spiritrally2.AuthActivity
 
 @Composable
-fun EmptyUserDataContent(innerPadding: PaddingValues) {
+fun EmptyUserDataContent(
+    innerPadding: PaddingValues,
+
+) {
     val context = LocalContext.current
 
     Column(verticalArrangement = Arrangement.Center,
@@ -91,13 +94,13 @@ fun EmptyUserDataContent(innerPadding: PaddingValues) {
         },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(10.dp)) {
+                .padding(75.dp, 10.dp, 75.dp)) {
             Text(text = "Kijelentkezés",
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(5.dp),
                 textAlign = TextAlign.Center,
-                fontSize = 20.sp
+                fontSize = 15.sp
             )
         }
     }
