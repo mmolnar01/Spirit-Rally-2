@@ -165,30 +165,11 @@ fun MapScreenComposable(
                     } else {
                         userDataList.forEach { userData ->
                             if (userData.location != null) {
-                                Marker(
-                                    state = rememberMarkerState(geoPoint = GeoPoint(userData.location!!.latitude, userData.location!!.longitude)),
-                                    icon = carIcon,
-                                    title = "TESZTELÉS",
-                                    snippet = "BLABLABLA"
-                                ) {
-                                    Text(text = it.title)
-                                }
-                                /*when (userData.category) {
+                                when (userData.category) {
                                     1 -> Marker(
                                         state = rememberMarkerState(geoPoint = GeoPoint(userData.location!!.latitude, userData.location!!.longitude)),
-                                        icon = carIcon,
-                                        title = "TESZTELÉS"
-                                    ) {
-                                        Column(
-                                            modifier = Modifier
-                                                .size(100.dp)
-                                                .background(color = Color.Gray, shape = RoundedCornerShape(7.dp)),
-                                            verticalArrangement = Arrangement.Center,
-                                            horizontalAlignment = Alignment.CenterHorizontally
-                                        ) {
-                                            Text(text = it.title)
-                                        }
-                                    }
+                                        icon = carIcon
+                                    )
                                     2 -> Marker(
                                         state = rememberMarkerState(geoPoint = GeoPoint(userData.location!!.latitude, userData.location!!.longitude)),
                                         icon = motorcycleIcon,
@@ -204,7 +185,7 @@ fun MapScreenComposable(
                                         icon = minimalIcon,
                                         title = userData.number.toString()
                                     )
-                                }*/
+                                }
                             }
                         }
                     }
