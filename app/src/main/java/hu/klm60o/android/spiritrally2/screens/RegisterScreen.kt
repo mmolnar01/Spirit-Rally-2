@@ -50,9 +50,15 @@ import hu.klm60o.android.spiritrally2.useful.setDisplayName
 
 @Composable
 fun RegisterScreenComposable(navController: NavController) {
-    var validEmail = true
-    var validPaswword = true
-    var validPasswordRepeat = true
+    val validEmail = remember {
+        mutableStateOf(true)
+    }
+    val validPaswword = remember {
+        mutableStateOf(true)
+    }
+    val validPasswordRepeat = remember {
+        mutableStateOf(true)
+    }
     val context = LocalContext.current
     //val viewModel = viewModel
     Surface {
@@ -99,11 +105,11 @@ fun RegisterScreenComposable(navController: NavController) {
             //Email bemeneti mező
             OutlinedTextField(value = userEmail.value, onValueChange = {
                 userEmail.value = it
-                validEmail = validateEmail(userEmail.value)
+                validEmail.value = validateEmail(userEmail.value)
             },
-                isError = !validEmail,
+                isError = !validEmail.value,
                 supportingText = {
-                    if(!validEmail) {
+                    if(!validEmail.value) {
                         Text(
                             modifier = Modifier.fillMaxWidth(),
                             text = "Érvénytelen Email",
@@ -112,7 +118,7 @@ fun RegisterScreenComposable(navController: NavController) {
                     }
                 },
                 trailingIcon = {
-                    if(!validEmail) {
+                    if(!validEmail.value) {
                         Icon(ErrorIcon,"error", tint = MaterialTheme.colorScheme.error)
                     }
                 },
@@ -149,11 +155,11 @@ fun RegisterScreenComposable(navController: NavController) {
             //Jelszó bemeneti mező
             OutlinedTextField(value = userPassword.value, onValueChange = {
                 userPassword.value = it
-                validPaswword = validatePassword(userPassword.value)
+                validPaswword.value = validatePassword(userPassword.value)
             },
-                isError = !validPaswword,
+                isError = !validPaswword.value,
                 supportingText = {
-                    if(!validPaswword) {
+                    if(!validPaswword.value) {
                         Text(
                             modifier = Modifier.fillMaxWidth(),
                             text = "A jelszó legyen min. 5 karakteres",
@@ -162,7 +168,7 @@ fun RegisterScreenComposable(navController: NavController) {
                     }
                 },
                 trailingIcon = {
-                    if(!validPaswword) {
+                    if(!validPaswword.value) {
                         Icon(ErrorIcon,"error", tint = MaterialTheme.colorScheme.error)
                     }
                 },
@@ -182,11 +188,11 @@ fun RegisterScreenComposable(navController: NavController) {
             //Jelszó újra bemeneti mező
             OutlinedTextField(value = userPasswordRepeat.value, onValueChange = {
                 userPasswordRepeat.value = it
-                validPasswordRepeat = validatePasswordRepeat(userPassword.value, userPasswordRepeat.value)
+                validPasswordRepeat.value = validatePasswordRepeat(userPassword.value, userPasswordRepeat.value)
             },
-                isError = !validPasswordRepeat,
+                isError = !validPasswordRepeat.value,
                 supportingText = {
-                    if(!validPasswordRepeat) {
+                    if(!validPasswordRepeat.value) {
                         Text(
                             modifier = Modifier.fillMaxWidth(),
                             text = "A jelszavak nem egyeznek",
@@ -195,7 +201,7 @@ fun RegisterScreenComposable(navController: NavController) {
                     }
                 },
                 trailingIcon = {
-                    if(!validPasswordRepeat) {
+                    if(!validPasswordRepeat.value) {
                         Icon(ErrorIcon,"error", tint = MaterialTheme.colorScheme.error)
                     }
                 },
@@ -214,7 +220,7 @@ fun RegisterScreenComposable(navController: NavController) {
 
             //Regisztrálás gomb
             ElevatedButton (onClick = {
-                if(validEmail && validPaswword && validPasswordRepeat) {
+                if(validEmail.value && validPaswword.value && validPasswordRepeat.value) {
                     registerUser(userEmail.value, userPassword.value) { error ->
                         if(error == null) {
                             showToast(context, "Sikeres regisztráció. Kérlek erősítsd meg az Email címedet!")
@@ -232,9 +238,9 @@ fun RegisterScreenComposable(navController: NavController) {
                     }
                 }
             },
-                enabled = userEmail.value.isNotEmpty() && validEmail
-                        && userPassword.value.isNotEmpty() && validPaswword
-                        && userPasswordRepeat.value.isNotEmpty() && validPasswordRepeat
+                enabled = userEmail.value.isNotEmpty() && validEmail.value
+                        && userPassword.value.isNotEmpty() && validPaswword.value
+                        && userPasswordRepeat.value.isNotEmpty() && validPasswordRepeat.value
                         && userTeamName.value.isNotEmpty(),
                 elevation = ButtonDefaults.elevatedButtonElevation(5.dp),
                 modifier = Modifier
@@ -267,12 +273,6 @@ fun RegisterScreenComposable(navController: NavController) {
                     fontWeight = FontWeight.Bold
                 )
             }
-
-
         }
     }
-
-
-
-
 }

@@ -8,6 +8,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -69,12 +70,13 @@ fun MapScreenComposable(
     val context = LocalContext.current
     val geoPoints = getGeoPointsFromGpx(context, "tabaliget.gpx")
 
+
     val redIcon: Drawable? by remember {
-        mutableStateOf(context.getDrawable(R.drawable.map_marker_red))
+        mutableStateOf(ContextCompat.getDrawable(context , R.drawable.map_marker_red))
     }
 
     val greenIcon: Drawable? by remember {
-        mutableStateOf(context.getDrawable(R.drawable.map_marker_green))
+        mutableStateOf(ContextCompat.getDrawable(context, R.drawable.map_marker_green))
     }
 
     val carIcon: Drawable? by remember {
@@ -138,7 +140,7 @@ fun MapScreenComposable(
                         racepointsList.forEach { racepoint ->
                             if (racepoint.timestamp != null) {
                                 Marker(
-                                    state = rememberMarkerState(geoPoint = GeoPoint(racepoint.location!!.latitude, racepoint.location!!.longitude)),
+                                    state = rememberMarkerState(geoPoint = GeoPoint(racepoint.location!!.latitude, racepoint.location!!.longitude), rotation = 90f),
                                     icon = greenIcon
                                 )
                             } else {

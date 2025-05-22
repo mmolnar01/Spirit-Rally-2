@@ -39,66 +39,6 @@ fun ResultScreenComposable(navController: NavController, viewModel: RacepointsVi
 
     val localRacePointsList = remember { mutableStateListOf<Racepoint>() }
 
-    val calendar = Calendar.getInstance()
-
-    /*Scaffold(
-        bottomBar = {
-            MyBottomAppbarComposable(navController)
-        },
-        topBar = { MyTopAppBar() },
-        floatingActionButton = {
-            AddRacepointFloatingActionButton(
-                onEditRacepoint = viewModel::editRacepoint,
-                racepointList = localRacePointsList
-            )
-        }
-        ) {
-        innerPadding ->
-        Column(verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxHeight()
-                .fillMaxWidth()
-                .padding(innerPadding)
-        ) {
-            //Text("Ez itt az eredmények képernyő")
-
-            when(val racepointsResponse = racepointsResponse) {
-                is Response.Idle -> {}
-                is Response.Loading -> LoadingIndicator()
-                is Response.Success -> racepointsResponse.data?.let { racepointsList ->
-                    if (racepointsList.isEmpty()) {
-                        EmptyRacepointListContent(innerPadding = innerPadding)
-                    } else {
-                        RacepointListContent(innerPadding = innerPadding, racePointList = racepointsList)
-                        //localRacePointsList = racepointsList
-                        localRacePointsList.clear()
-                        localRacePointsList.addAll(racepointsList)
-                    }
-                }
-                is Response.Failure -> racepointsResponse.e?.message?.let { errorMessage ->
-                    LaunchedEffect(errorMessage) {
-                        showToast(context, errorMessage)
-                    }
-                }
-            }
-
-            when(val editRacepointResponse = editRacepointResponse) {
-                is Response.Idle -> {}
-                is Response.Loading -> LoadingIndicator()
-                is Response.Success -> LaunchedEffect(Unit) {
-                    showToast(context, "Ellenörző pont frissítve")
-                    viewModel.resetEditRacepointState()
-                }
-                is Response.Failure -> editRacepointResponse.e?.message?.let { errorMessage ->
-                    LaunchedEffect(errorMessage) {
-                        showToast(context, errorMessage)
-                        viewModel.resetEditRacepointState()
-                    }
-                }
-            }
-        }
-    }*/
     Scaffold(
         floatingActionButton = {
             AddRacepointFloatingActionButton(

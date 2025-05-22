@@ -54,8 +54,12 @@ import hu.klm60o.android.spiritrally2.useful.validatePassword
 
 @Composable
 fun LoginScreenComposable(navController: NavController) {
-    var validEmail = true
-    var validPassword = true
+    val validEmail = remember {
+        mutableStateOf(true)
+    }
+    val validPassword = remember {
+        mutableStateOf(true)
+    }
     val context = LocalContext.current
 
     Surface {
@@ -93,11 +97,11 @@ fun LoginScreenComposable(navController: NavController) {
             //Email bemeneti mező
             OutlinedTextField(value = userEmail.value, onValueChange = {
                 userEmail.value = it
-                validEmail = validateEmail(userEmail.value)
+                validEmail.value = validateEmail(userEmail.value)
             },
-                isError = !validEmail,
+                isError = !validEmail.value,
                 supportingText = {
-                    if(!validEmail) {
+                    if(!validEmail.value) {
                         Text(
                             modifier = Modifier.fillMaxWidth(),
                             text = "Érvénytelen Email",
@@ -106,7 +110,7 @@ fun LoginScreenComposable(navController: NavController) {
                     }
                 },
                 trailingIcon = {
-                    if(!validEmail) {
+                    if(!validEmail.value) {
                         Icon(ErrorIcon,"error", tint = MaterialTheme.colorScheme.error)
                     }
                 },
@@ -125,11 +129,11 @@ fun LoginScreenComposable(navController: NavController) {
             //Jelszó bemeneti mező
             OutlinedTextField(value = userPassword.value, onValueChange = {
                 userPassword.value = it
-                validPassword = validatePassword(userPassword.value)
+                validPassword.value = validatePassword(userPassword.value)
             },
-                isError = !validPassword,
+                isError = !validPassword.value,
                 supportingText = {
-                    if(!validPassword) {
+                    if(!validPassword.value) {
                         Text(
                             modifier = Modifier.fillMaxWidth(),
                             text = "A jelszó legyen min. 5 karakteres",
@@ -138,7 +142,7 @@ fun LoginScreenComposable(navController: NavController) {
                     }
                 },
                 trailingIcon = {
-                    if(!validPassword) {
+                    if(!validPassword.value) {
                         Icon(ErrorIcon,"error", tint = MaterialTheme.colorScheme.error)
                     }
                 },
@@ -157,7 +161,7 @@ fun LoginScreenComposable(navController: NavController) {
 
             //Bejelentkezés gomb
             ElevatedButton(onClick = {
-                if(validEmail && validPassword) {
+                if(validEmail.value && validPassword.value) {
                     loginUSer(userEmail.value, userPassword.value) { error ->
                         if(error == null) {
                             val currentUser = Firebase.auth.currentUser

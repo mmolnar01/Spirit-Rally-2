@@ -59,7 +59,7 @@ fun SetUserLocation(
         val locationClient = LocationServices.getFusedLocationProviderClient(context)
         val cancellationTokenSource = CancellationTokenSource()
         locationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, cancellationTokenSource.token)
-        showToast(context, "ECCER")
+        //showToast(context, "ECCER")
 
         val locationCallback: LocationCallback = object : LocationCallback() {
             override fun onLocationResult(result: LocationResult) {

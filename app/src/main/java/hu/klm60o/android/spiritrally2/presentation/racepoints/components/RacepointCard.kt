@@ -21,6 +21,7 @@ import com.google.firebase.firestore.GeoPoint
 import hu.klm60o.android.spiritrally2.SpiritRally2
 import hu.klm60o.android.spiritrally2.domain.model.Racepoint
 import hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme
+import org.joda.time.format.DateTimeFormatter
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -29,10 +30,10 @@ fun RacepointCard(
     racepoint: Racepoint,
     size: Int
 ) {
-    val formatter = SimpleDateFormat("hh:mm")
+    val formatter = SimpleDateFormat("hh:mm", java.util.Locale.GERMAN)
     var timeText = "-"
     if (racepoint.timestamp != null) {
-        val date = racepoint.timestamp?.toDate()
+        val date = racepoint.timestamp!!.toDate()
         timeText = formatter.format(date)
     }
     Row(
