@@ -40,95 +40,13 @@ fun MyBottomAppbarComposable(navController: NavController, navigationItems: List
     val selectedNavigationIndex = rememberSaveable {
         mutableIntStateOf(0)
     }
-    /*BottomAppBar(
-        actions = {
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-
-                    .weight(1f)
-            ) {
-                IconButton(onClick = {
-                    navController.navigate(NewsScreen)
-                },) {
-                    Icon(Icons.Filled.Home, contentDescription = "News screen")
-                }
-                Text(text = "Hírek",
-                    modifier = Modifier
-                        .padding(0.dp),
-                    textAlign = TextAlign.Center,
-                    fontSize = 10.sp
-                )
-            }
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .weight(1f)
-            ) {
-                IconButton(onClick = {
-                    navController.navigate(MapScreen)
-                }) {
-                    Icon(Icons.Filled.LocationOn, contentDescription = "Info screen")
-                }
-                Text(text = "Térkép",
-                    modifier = Modifier
-                        .padding(0.dp),
-                    textAlign = TextAlign.Center,
-                    fontSize = 10.sp
-                )
-            }
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .weight(1f)
-            ) {
-                IconButton(onClick = {
-                    navController.navigate(ResultScreen)
-                }) {
-                    Icon(Icons.Filled.CheckCircle, contentDescription = "Results screen")
-                }
-                Text(text = "Eredmények",
-                    modifier = Modifier
-                        .padding(0.dp),
-                    textAlign = TextAlign.Center,
-                    fontSize = 10.sp
-                )
-            }
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .weight(1f)
-            ) {
-                IconButton(onClick = {
-                    navController.navigate(ProfileScreen)
-                }) {
-                    Icon(Icons.Filled.Person, contentDescription = "Profile screen")
-                }
-                Text(text = "Profil",
-                    modifier = Modifier
-                        .padding(0.dp),
-                    textAlign = TextAlign.Center,
-                    fontSize = 10.sp
-                )
-            }
-        }
-    })*/
     NavigationBar() {
         navigationItems.forEachIndexed { index, item ->
             NavigationBarItem(
                 selected = selectedNavigationIndex.intValue == index,
                 onClick = {
                     selectedNavigationIndex.intValue = index
-                    navController.navigate(item.route)
+                    navController.navigate(item.route) { popUpTo(0) }
                 },
                 icon = {
                     Icon(imageVector = item.icon, contentDescription = item.title)

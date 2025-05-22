@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
@@ -52,7 +53,7 @@ fun ResultScreenComposable(navController: NavController, viewModel: RacepointsVi
             modifier = Modifier
                 .fillMaxHeight()
                 .fillMaxWidth()
-                .padding(innerPadding)
+                .padding(5.dp)
         ) {
             //Text("Ez itt az eredmények képernyő")
 

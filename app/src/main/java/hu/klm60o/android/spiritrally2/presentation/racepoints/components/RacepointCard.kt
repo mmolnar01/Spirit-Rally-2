@@ -1,5 +1,6 @@
 package hu.klm60o.android.spiritrally2.presentation.racepoints.components
 
+import android.graphics.drawable.Icon
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.GeoPoint
 import hu.klm60o.android.spiritrally2.SpiritRally2
+import hu.klm60o.android.spiritrally2.assets.IconFlag
 import hu.klm60o.android.spiritrally2.domain.model.Racepoint
 import hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme
 import org.joda.time.format.DateTimeFormatter
@@ -30,7 +32,7 @@ fun RacepointCard(
     racepoint: Racepoint,
     size: Int
 ) {
-    val formatter = SimpleDateFormat("hh:mm", java.util.Locale.GERMAN)
+    val formatter = SimpleDateFormat("HH:mm", java.util.Locale.GERMAN)
     var timeText = "-"
     if (racepoint.timestamp != null) {
         val date = racepoint.timestamp!!.toDate()
@@ -47,7 +49,7 @@ fun RacepointCard(
                     .padding(5.dp)
             ) {
                 Icon(
-                    Icons.Filled.Place, contentDescription = "Start point icon"
+                    IconFlag, contentDescription = "Start point icon"
                 )
             }
             Column(
@@ -62,7 +64,7 @@ fun RacepointCard(
                     .padding(5.dp)
             ) {
                 Icon(
-                    Icons.Filled.Place, contentDescription = "End point icon"
+                    IconFlag, contentDescription = "End point icon"
                 )
             }
             Column(
@@ -100,7 +102,7 @@ fun RacepointCard(
                 onValueChange = {},
                 readOnly = true,
                 modifier = Modifier
-                    .width(100.dp),
+                    .width(120.dp),
                 label = {
                     Text("Időpont")
                 }
