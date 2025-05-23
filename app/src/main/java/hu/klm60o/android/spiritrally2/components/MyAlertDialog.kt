@@ -36,15 +36,6 @@ fun MyAlertDialog(
             ) {
                 Text("Rendben")
             }
-        }/*,
-        dismissButton = {
-            TextButton(
-                onClick = {
-                    onDismissRequest()
-                }
-            ) {
-                Text("Dismiss")
-            }
-        }*/
+        }
     )
 }

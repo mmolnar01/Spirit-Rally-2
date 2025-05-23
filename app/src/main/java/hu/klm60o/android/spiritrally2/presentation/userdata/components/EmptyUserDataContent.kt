@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -27,10 +26,7 @@ import com.google.firebase.ktx.Firebase
 import hu.klm60o.android.spiritrally2.AuthActivity
 
 @Composable
-fun EmptyUserDataContent(
-    innerPadding: PaddingValues,
-
-) {
+fun EmptyUserDataContent() {
     val context = LocalContext.current
 
     Column(verticalArrangement = Arrangement.Center,

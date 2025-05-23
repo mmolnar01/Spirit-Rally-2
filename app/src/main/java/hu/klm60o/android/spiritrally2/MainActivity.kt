@@ -35,6 +35,7 @@ class MainActivity : ComponentActivity() {
             }
         }
 
+        //A kilépés akkor műküdik, ha 3 sec-en belül kétszer megnyomjuk a visszát
         val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                if (backPressedTime + 3000L > System.currentTimeMillis()){
@@ -47,6 +48,7 @@ class MainActivity : ComponentActivity() {
         }
         onBackPressedDispatcher.addCallback(this, callback)
 
+        //Elmenti az FCM token-t a Firestore-ba
         FirebaseMessaging.getInstance().token.addOnSuccessListener { token ->
             val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return@addOnSuccessListener
             val db = FirebaseFirestore.getInstance()
@@ -57,15 +59,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-/*@Serializable
-object NewsScreen
-
-@Serializable
-object MapScreen
-
-@Serializable
-object ResultScreen
-
-@Serializable
-object ProfileScreen*/

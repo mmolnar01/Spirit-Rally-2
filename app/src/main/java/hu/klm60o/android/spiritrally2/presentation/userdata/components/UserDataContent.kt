@@ -4,14 +4,11 @@ import android.app.Activity
 import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Person
@@ -35,7 +32,6 @@ import hu.klm60o.android.spiritrally2.domain.model.UserData
 
 @Composable
 fun UserDataContent(
-    innerPadding: PaddingValues,
     currentUserData: UserData,
     checked: Boolean,
     onChecked: (Boolean) -> Unit
@@ -53,7 +49,8 @@ fun UserDataContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(10.dp)
-                .size(75.dp))
+                .size(75.dp)
+        )
 
         OutlinedTextField(value = Firebase.auth.currentUser?.email.toString(), onValueChange = {},
             label = {

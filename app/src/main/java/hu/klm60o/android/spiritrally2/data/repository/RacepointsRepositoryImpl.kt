@@ -1,10 +1,8 @@
 package hu.klm60o.android.spiritrally2.data.repository
 
-import com.google.firebase.Firebase
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.GeoPoint
 import hu.klm60o.android.spiritrally2.domain.model.Racepoint
 import hu.klm60o.android.spiritrally2.domain.model.Response.Failure
 import hu.klm60o.android.spiritrally2.domain.model.Response.Success
@@ -21,28 +19,13 @@ class RacepointsRepositoryImpl (
     private val commonRef: CollectionReference
 ): RacepointRepository {
 
-    /*override fun getRacepointsFromFirestore() = callbackFlow {
-        val snapshotListener = racepointsRef.addSnapshotListener { snapshot, e ->
-            val racepointsResponse = if (snapshot != null) {
-                val racepoints = snapshot.toObjects(Racepoint::class.java)
-                Success(racepoints)
-            } else {
-                Failure(e)
-            }
-            trySend(racepointsResponse)
-        }
-        awaitClose {
-            snapshotListener.remove()
-        }
-    }*/
-
     override fun getRacepointsFromFirestore() = callbackFlow {
         val snapshotListener = racepointsRef.addSnapshotListener { snapshot, e ->
             if (snapshot != null && !snapshot.isEmpty) {
                 val racepoints = snapshot.toObjects(Racepoint::class.java)
                 trySend(Success(racepoints))
             } else {
-                // Fallback: fetch from another collection
+                //Ha még nincs a user-nek saját kollekciója, lekérdezzük a verseny adatait a közösből
                 commonRef.get()
                     .addOnSuccessListener { fallbackSnapshot ->
                         val fallbackRacepoints = fallbackSnapshot.toObjects(Racepoint::class.java)

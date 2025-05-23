@@ -1,12 +1,10 @@
 package hu.klm60o.android.spiritrally2.presentation.racepoints.components
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,7 +16,6 @@ import hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme
 
 @Composable
 fun RacepointListContent(
-    innerPadding: PaddingValues,
     racePointList: List<Racepoint>
 ) {
     LazyColumn(
@@ -52,6 +49,6 @@ fun RacepointListContentPreview() {
     val racePoint7 = Racepoint(7, GeoPoint(1.0, 1.0))
     val racePointsListTest: List<Racepoint> = listOf(racePoint1, racePoint2, racePoint3, racePoint4, racePoint5, racePoint6, racePoint7)
     SpiritRally2Theme {
-        RacepointListContent(innerPadding = PaddingValues(), racePointsListTest)
+        RacepointListContent(racePointsListTest)
     }
 }

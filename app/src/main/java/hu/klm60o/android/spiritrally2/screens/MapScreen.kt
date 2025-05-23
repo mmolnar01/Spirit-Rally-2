@@ -25,11 +25,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import com.utsman.osmandcompose.CameraProperty
 import com.utsman.osmandcompose.CameraState
 import com.utsman.osmandcompose.Marker
@@ -46,8 +46,7 @@ import org.osmdroid.util.GeoPoint
 @Composable
 fun MapScreenComposable(
     racepointsViewModel: RacepointsViewModel = hiltViewModel(),
-    userDataViewModel: UserDataViewModel = hiltViewModel(),
-    innerPadding: PaddingValues
+    userDataViewModel: UserDataViewModel = hiltViewModel()
 ) {
     val racepointsResponse by racepointsViewModel.racepointsState.collectAsStateWithLifecycle()
     val userDataListResponse by userDataViewModel.userDataListState.collectAsStateWithLifecycle()
@@ -119,9 +118,7 @@ fun MapScreenComposable(
                 is Response.Idle -> {}
                 is Response.Loading -> {}
                 is Response.Success -> racepointsResponse.data?.let { racepointsList ->
-                    if (racepointsList.isEmpty()) {
-                        //EmptyRacepointListContent(innerPadding = innerPadding)
-                    } else {
+                    if (racepointsList.isNotEmpty()) {
                         racepointsList.forEach { racepoint ->
                             if (racepoint.timestamp != null) {
                                 Marker(
@@ -147,9 +144,7 @@ fun MapScreenComposable(
                 is Response.Idle -> {}
                 is Response.Loading -> {}
                 is Response.Success -> userDataListResponse.data?.let { userDataList ->
-                    if (userDataList.isEmpty()) {
-
-                    } else {
+                    if (userDataList.isNotEmpty()) {
                         userDataList.forEach { userData ->
                             if (userData.location != null) {
                                 when (userData.category) {
@@ -288,24 +283,18 @@ fun MapScreenComposable(
     }
 }
 
-/*@Preview(showBackground = true)
+@Preview(showBackground = true, apiLevel = 34)
 @Composable
 fun MapPreview() {
     hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme {
-        MapScreenComposable(
-            navController = rememberNavController(),
-            innerPadding = PaddingValues()
-        )
+        MapScreenComposable()
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, apiLevel = 34)
 @Composable
 fun MapPreviewDark() {
     hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme(darkTheme = true) {
-        MapScreenComposable(
-            navController = rememberNavController(),
-            innerPadding = PaddingValues()
-        )
+        MapScreenComposable()
     }
-}*/
+}

@@ -16,20 +16,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
-import com.google.accompanist.permissions.rememberPermissionState
-import com.google.accompanist.permissions.shouldShowRationale
 import hu.klm60o.android.spiritrally2.components.MyAlertDialog
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun RequestNotificationCameraLocationPermissionDialog(
-    granted: Boolean,
     onGranted: (Boolean) -> Unit
 ) {
     val permissionsState = rememberMultiplePermissionsState(
@@ -50,14 +45,6 @@ fun RequestNotificationCameraLocationPermissionDialog(
             PermissionDialog { permissionsState.launchMultiplePermissionRequest() }
         }
     }
-
-    /*if (!permissionsState.allPermissionsGranted) {
-        if (permissionsState.shouldShowRationale) {
-            RationaleDialog()
-        } else {
-            PermissionDialog { permissionsState.launchMultiplePermissionRequest() }
-        }
-    }*/
 }
 
 @Composable

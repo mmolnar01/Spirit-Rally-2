@@ -20,7 +20,6 @@ import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
 import hu.klm60o.android.spiritrally2.assets.QrCode
 import hu.klm60o.android.spiritrally2.domain.model.UserData
-import hu.klm60o.android.spiritrally2.permissions.RequestCameraAndLocationPermissionDialog
 import hu.klm60o.android.spiritrally2.useful.showToast
 
 @Composable
@@ -79,6 +78,4 @@ fun AddUserDataFloatingActionButton(
     ) {
         Icon(QrCode, contentDescription = "Read QR code")
     }
-
-
 }

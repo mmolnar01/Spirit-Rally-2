@@ -18,7 +18,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -36,7 +35,6 @@ import kotlinx.serialization.Serializable
 @Composable
 fun SpiritRallyMainScreen() {
     val navController = rememberNavController()
-    val context = LocalContext.current
     var locationTrackingChecked by rememberSaveable { mutableStateOf(false) }
     var permissionsGranted by rememberSaveable { mutableStateOf(false) }
     val navigationItems = listOf(
@@ -67,9 +65,9 @@ fun SpiritRallyMainScreen() {
     ) { innerPadding ->
         //Jogosultságok lekérdezése
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            RequestNotificationCameraLocationPermissionDialog(permissionsGranted) { permissionsGranted = it }
+            RequestNotificationCameraLocationPermissionDialog() { permissionsGranted = it }
         } else {
-            RequestCameraAndLocationPermissionDialog(permissionsGranted) { permissionsGranted = it }
+            RequestCameraAndLocationPermissionDialog() { permissionsGranted = it }
         }
 
         var locationRequest by rememberSaveable {
@@ -88,7 +86,7 @@ fun SpiritRallyMainScreen() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NewsScreenComposable(innerPadding = innerPadding)
+                    NewsScreenComposable()
                 }
             }
             composable<MapScreen> {
@@ -96,7 +94,7 @@ fun SpiritRallyMainScreen() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MapScreenComposable(innerPadding = innerPadding)
+                    MapScreenComposable()
                 }
             }
             composable<ResultScreen> {

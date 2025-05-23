@@ -1,7 +1,6 @@
 package hu.klm60o.android.spiritrally2.presentation.racepoints.components
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
@@ -12,9 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun EmptyRacepointListContent(
-    innerPadding: PaddingValues
-) {
+fun EmptyRacepointListContent() {
     Box(
         modifier = Modifier.fillMaxSize().padding(3.dp),
         contentAlignment = Alignment.Center

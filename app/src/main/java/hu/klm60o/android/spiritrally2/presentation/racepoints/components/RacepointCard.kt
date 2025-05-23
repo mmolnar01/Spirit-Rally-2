@@ -1,6 +1,5 @@
 package hu.klm60o.android.spiritrally2.presentation.racepoints.components
 
-import android.graphics.drawable.Icon
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,18 +13,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.GeoPoint
-import hu.klm60o.android.spiritrally2.SpiritRally2
 import hu.klm60o.android.spiritrally2.assets.IconFlag
 import hu.klm60o.android.spiritrally2.domain.model.Racepoint
 import hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme
-import org.joda.time.format.DateTimeFormatter
 import java.text.SimpleDateFormat
-import java.util.Date
 
 @Composable
 fun RacepointCard(

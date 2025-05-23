@@ -1,6 +1,5 @@
 package hu.klm60o.android.spiritrally2.presentation.racepoints.components
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,9 +8,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableDoubleStateOf
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -26,42 +22,12 @@ import hu.klm60o.android.spiritrally2.useful.calculateAverageSpeedInKmH
 import hu.klm60o.android.spiritrally2.useful.getDistanceFromGeoPoints
 import hu.klm60o.android.spiritrally2.useful.getGeoPointsFromGpx
 import hu.klm60o.android.spiritrally2.useful.round
-import org.osmdroid.util.GeoPoint
 
 @Composable
 fun RaceResultCard(
     racePoints: List<Racepoint>
 ) {
     val context = LocalContext.current
-    Log.d("TAG", "RaceResultCard recomposed")
-    /*val achievedRacePoints = remember { mutableIntStateOf(0) }
-    val totalRacepoints = remember { mutableIntStateOf(0) }
-    totalRacepoints.intValue = racePoints.size - 2
-
-    //val geoPoints = getGeoPointsFromGpx(context, "tabaliget.gpx")
-    //val distance = getDistanceFromGeoPoints(geoPoints)
-
-    //GeoPoint lista lekérdezése
-    val geoPoints = remember { mutableStateListOf<GeoPoint>() }
-    geoPoints.addAll(getGeoPointsFromGpx(context, "tabaliget.gpx"))
-
-    //Távolság lekérdezése
-    val distance = remember { mutableDoubleStateOf(0.0) }
-    distance.doubleValue = getDistanceFromGeoPoints(geoPoints)
-
-    //Átlagsebesség kiszámítása
-    val averageSpeed = remember { mutableDoubleStateOf(0.0) }
-
-    if (racePoints.first().timestamp != null && racePoints.last().timestamp != null) {
-        averageSpeed.doubleValue = calculateAverageSpeedInKmH(racePoints.first().timestamp!!.seconds, racePoints.last().timestamp!!.seconds, distance.doubleValue)
-            .round(2)
-    }
-
-    for (racePoint in racePoints) {
-        if (racePoint.timestamp != null && racePoint.id != 1 && racePoint.id != racePoints.size) {
-            achievedRacePoints.intValue++
-        }
-    }*/
 
     val totalRacepoints = racePoints.size - 2
     var achievedRacePoints = 0
@@ -81,11 +47,7 @@ fun RaceResultCard(
 
 
 
-        //Eredmény szövegek létrehozása
-    /*val averageSpeedText = remember { mutableStateOf("") }
-    val racePointText = remember { mutableStateOf("") }
-    averageSpeedText.value = "${averageSpeed.doubleValue} km/h"
-    racePointText.value = "${achievedRacePoints.intValue} / ${totalRacepoints.intValue}"*/
+    //Eredmény szövegek létrehozása
     val averageSpeedText = remember { mutableStateOf("") }
     val racePointText = remember { mutableStateOf("") }
     averageSpeedText.value = "${averageSpeed} km/h"

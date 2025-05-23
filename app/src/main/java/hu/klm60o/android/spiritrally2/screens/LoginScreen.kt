@@ -167,22 +167,10 @@ fun LoginScreenComposable(navController: NavController) {
                             val currentUser = Firebase.auth.currentUser
                             if(currentUser?.isEmailVerified == true) {
                                 //Lekérdezzük a bejlentkezett felhasználó eredményeit
-                                //viewModel.teamName = currentUser.displayName
-                                //viewModel.getUserDataFromFirestore(currentUser, context)
-
-                                //newsViewModel.getNews()
 
                                 context.startActivity(Intent(context, MainActivity::class.java))
                                 val activity = context as? Activity
                                 activity?.finish()
-                                /*BackHandler {
-                                    context.findActivity()?.finish()
-                                }*/
-                                /*navController.navigate(NewsScreen) {
-                                    popUpTo(navController.graph.id) {
-                                        inclusive = true
-                                    }
-                                }*/
                             } else {
                                 showToast(context, "Az Email nincs megerősítve")
                             }
@@ -248,7 +236,7 @@ fun LoginScreenComposable(navController: NavController) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, apiLevel = 34)
 @Composable
 fun LoginPreview() {
     SpiritRally2Theme {
@@ -258,7 +246,7 @@ fun LoginPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, apiLevel = 34)
 @Composable
 fun LoginPreviewDark() {
     SpiritRally2Theme(darkTheme = true) {

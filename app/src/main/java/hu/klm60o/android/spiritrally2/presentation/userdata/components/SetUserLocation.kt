@@ -31,6 +31,7 @@ import hu.klm60o.android.spiritrally2.useful.showToast
     anyOf = [Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION],
 )
 
+//Elmenti a user helyzetét a Firestore-ra
 @Composable
 fun SetUserLocation(
     locationRequest: LocationRequest,
@@ -59,7 +60,6 @@ fun SetUserLocation(
         val locationClient = LocationServices.getFusedLocationProviderClient(context)
         val cancellationTokenSource = CancellationTokenSource()
         locationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, cancellationTokenSource.token)
-        //showToast(context, "ECCER")
 
         val locationCallback: LocationCallback = object : LocationCallback() {
             override fun onLocationResult(result: LocationResult) {
@@ -67,10 +67,6 @@ fun SetUserLocation(
                     val userDataUpdate = mapOf("location" to GeoPoint(location.latitude, location.longitude))
                     viewModel.editUserData(userDataUpdate)
                 }
-                /*result.lastLocation?.let { location ->
-                    val userDataUpdate = mapOf("location" to GeoPoint(location.latitude, location.longitude))
-                    viewModel.editUserData(userDataUpdate)
-                }*/
             }
         }
 

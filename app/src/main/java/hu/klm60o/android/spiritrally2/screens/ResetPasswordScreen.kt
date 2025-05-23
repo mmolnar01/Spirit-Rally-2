@@ -174,7 +174,7 @@ fun ResetPasswordScreenComposable(navController: NavController) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, apiLevel = 34)
 @Composable
 fun ResetPasswordPreview() {
     SpiritRally2Theme {
@@ -184,7 +184,7 @@ fun ResetPasswordPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, apiLevel = 34)
 @Composable
 fun ResetPasswordPreviewDark() {
     SpiritRally2Theme(darkTheme = true) {

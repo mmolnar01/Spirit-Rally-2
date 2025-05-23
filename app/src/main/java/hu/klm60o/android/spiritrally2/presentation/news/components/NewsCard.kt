@@ -9,7 +9,6 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -79,7 +78,7 @@ fun NewsCard(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, apiLevel = 34)
 @Composable
 fun NewsCardPreview() {
     val news1 = News(1, "Hír címe", "Hír tartalma, lorem ipsum dolor sit atmet, rebarbara rebarbara", false)
@@ -88,7 +87,7 @@ fun NewsCardPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, apiLevel = 34)
 @Composable
 fun NewsCardPreviewImportant() {
     val news1 = News(1, "Hír címe", "Hír tartalma, lorem ipsum dolor sit atmet, rebarbara rebarbara", true)
@@ -97,7 +96,7 @@ fun NewsCardPreviewImportant() {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, apiLevel = 34)
 @Composable
 fun NewsCardPreviewDark() {
     val news1 = News(1, "Hír címe", "Hír tartalma, lorem ipsum dolor sit atmet, rebarbara rebarbara", false)
@@ -106,7 +105,7 @@ fun NewsCardPreviewDark() {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, apiLevel = 34)
 @Composable
 fun NewsCardPreviewImportantDark() {
     val news1 = News(1, "Hír címe", "Hír tartalma, lorem ipsum dolor sit atmet, rebarbara rebarbara", true)

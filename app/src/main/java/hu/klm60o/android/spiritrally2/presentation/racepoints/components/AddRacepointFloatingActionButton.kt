@@ -36,7 +36,6 @@ fun AddRacepointFloatingActionButton(
 ) {
     val calendar = Calendar.getInstance()
     val context = LocalContext.current
-    //var textResultInteger by remember { mutableStateOf("") }
     var resultInteger by remember { mutableIntStateOf(0) }
     val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
 
@@ -49,8 +48,6 @@ fun AddRacepointFloatingActionButton(
         if (result.contents == null) {
             showToast(context, "Beolvasás megszakítva")
         } else {
-            //textResultInteger = result.contents.toIntOrNull().toString()
-
             //Try blokk az eredmény kiolvasásánál
             //Így el tudjuk kapni a NumberFormatException-t
             try {
@@ -93,24 +90,9 @@ fun AddRacepointFloatingActionButton(
         barCodeLauncher.launch(options)
     }
 
-    val requestPermissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissions ->
-        if (!permissions.containsValue(false)) {
-            showCamera()
-        } else {
-            showToast(context, "Kérem engedélyezze a jogosultságokat")
-        }
-    }
-
     FloatingActionButton(
         onClick = {
-            requestPermissionLauncher.launch(
-                arrayOf(
-                    Manifest.permission.CAMERA,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                )
-            )
+            showCamera()
         },
         containerColor = MaterialTheme.colorScheme.primary,
         elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(10.dp, 15.dp, 15.dp,15.dp)

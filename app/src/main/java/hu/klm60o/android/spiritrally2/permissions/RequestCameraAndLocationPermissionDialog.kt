@@ -22,7 +22,6 @@ import hu.klm60o.android.spiritrally2.components.MyAlertDialog
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun RequestCameraAndLocationPermissionDialog(
-    granted: Boolean,
     onGranted: (Boolean) -> Unit
 ) {
     val permissionsState = rememberMultiplePermissionsState(
@@ -42,14 +41,6 @@ fun RequestCameraAndLocationPermissionDialog(
             CameraAndLocationPermissionDialog { permissionsState.launchMultiplePermissionRequest() }
         }
     }
-
-    /*if (!permissionsState.allPermissionsGranted) {
-        if (permissionsState.shouldShowRationale) {
-            CameraAndLocationRationaleDialog()
-        } else {
-            CameraAndLocationPermissionDialog { permissionsState.launchMultiplePermissionRequest() }
-        }
-    }*/
 }
 
 @Composable

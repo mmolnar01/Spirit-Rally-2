@@ -4,6 +4,7 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -17,12 +18,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import hu.klm60o.android.spiritrally2.components.LoadingIndicator
@@ -43,18 +41,20 @@ fun ProfileScreenComposable(
     val context = LocalContext.current
     val userDataListResponse by viewModel.userDataListState.collectAsStateWithLifecycle()
     val addUserDataResponse by viewModel.addUserDataState.collectAsStateWithLifecycle()
-    val editUserDataResponse by viewModel.editUserDataState.collectAsStateWithLifecycle()
 
     val currentUserData = remember { mutableStateOf<UserData>(UserData()) }
 
     Scaffold(
-        floatingActionButton = { AddUserDataFloatingActionButton(onAddUserData = viewModel::addUserData) }
+        floatingActionButton = {
+            AddUserDataFloatingActionButton(onAddUserData = viewModel::addUserData)
+        },
+        contentWindowInsets = WindowInsets(0.dp)
     ) { innerPadding ->
         Column(verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxHeight()
-                .padding(5.dp)
+                .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
         ) {
             //UserData lekérdezése és listázása
@@ -63,7 +63,7 @@ fun ProfileScreenComposable(
                 is Response.Loading -> LoadingIndicator()
                 is Response.Success -> userDataListResponse.data?.let { userDataList ->
                     if (userDataList.isEmpty()) {
-                        EmptyUserDataContent(innerPadding = innerPadding)
+                        EmptyUserDataContent()
                     } else {
                         //Ez egy szar így
                         //UserViewModel-be kéne tenni hogy lekérdezi a jelenlegi felhasználó adatait külön
@@ -72,17 +72,14 @@ fun ProfileScreenComposable(
                         val userData = userDataList.firstOrNull { it.id == Firebase.auth.currentUser?.uid }
                         if (userData != null) {
                             currentUserData.value = userData
-                            UserDataContent(innerPadding = innerPadding, currentUserData = currentUserData.value, checked = checked) { onChecked(it) }
+                            UserDataContent(currentUserData = currentUserData.value, checked = checked) { onChecked(it) }
                         } else {
-                            EmptyUserDataContent(innerPadding = innerPadding)
+                            EmptyUserDataContent()
                         }
-                        //currentUserData.value = userDataList.firstOrNull { it.id == Firebase.auth.currentUser?.uid }!!
-                        //UserDataContent(innerPadding = innerPadding, currentUserData = currentUserData.value, checked = checked) { onChecked(it) }
                     }
                 }
                 is Response.Failure -> userDataListResponse.e?.message?.let { errorMessage ->
                     LaunchedEffect(errorMessage) {
-                        //showToast(context, errorMessage)
                         Log.e(TAG, "ProfileScreen userDataListResponse Hiba: $errorMessage")
                     }
                 }

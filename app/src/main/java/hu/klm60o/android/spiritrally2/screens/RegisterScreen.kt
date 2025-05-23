@@ -60,7 +60,7 @@ fun RegisterScreenComposable(navController: NavController) {
         mutableStateOf(true)
     }
     val context = LocalContext.current
-    //val viewModel = viewModel
+
     Surface {
         //Változók a felhasználói input elátrolására
         val userEmail = remember {

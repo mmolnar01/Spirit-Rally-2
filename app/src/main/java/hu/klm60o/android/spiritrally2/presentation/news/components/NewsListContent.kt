@@ -14,7 +14,6 @@ import hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme
 
 @Composable
 fun NewsListContent(
-    innerPadding: PaddingValues,
     newsList: List<News>
 ) {
     LazyColumn(
@@ -26,7 +25,7 @@ fun NewsListContent(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, apiLevel = 34)
 @Composable
 fun NewsListContentPreview() {
     val news1 = News(1, "Hír címe", "Hír tartalma, lorem ipsum dolor sit atmet, rebarbara rebarbara", false)
@@ -36,6 +35,6 @@ fun NewsListContentPreview() {
     val news5 = News(5, "Hír címe", "Hír tartalma, lorem ipsum dolor sit atmet, rebarbara rebarbara", false)
     val list: List<News> = listOf(news1, news2, news3, news4, news5)
     SpiritRally2Theme {
-        NewsListContent(innerPadding = PaddingValues(), list)
+        NewsListContent(list)
     }
 }

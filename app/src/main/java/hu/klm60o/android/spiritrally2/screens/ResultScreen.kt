@@ -2,6 +2,7 @@ package hu.klm60o.android.spiritrally2.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -46,14 +47,15 @@ fun ResultScreenComposable(viewModel: RacepointsViewModel = hiltViewModel()) {
                 onEditRacepoint = viewModel::editRacepoint,
                 racepointList = localRacePointsList
             )
-        }
+        },
+        contentWindowInsets = WindowInsets(0.dp)
     ) { innerPadding ->
         Column(verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxHeight()
                 .fillMaxWidth()
-                .padding(5.dp)
+                .padding(innerPadding)
         ) {
             //Text("Ez itt az eredmények képernyő")
 
@@ -62,9 +64,9 @@ fun ResultScreenComposable(viewModel: RacepointsViewModel = hiltViewModel()) {
                 is Response.Loading -> LoadingIndicator()
                 is Response.Success -> racepointsResponse.data?.let { racepointsList ->
                     if (racepointsList.isEmpty()) {
-                        EmptyRacepointListContent(innerPadding = innerPadding)
+                        EmptyRacepointListContent()
                     } else {
-                        RacepointListContent(innerPadding = innerPadding, racePointList = racepointsList)
+                        RacepointListContent(racePointList = racepointsList)
                         //localRacePointsList = racepointsList
                         localRacePointsList.clear()
                         localRacePointsList.addAll(racepointsList)

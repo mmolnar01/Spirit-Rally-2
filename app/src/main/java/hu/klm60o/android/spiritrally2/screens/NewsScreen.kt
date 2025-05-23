@@ -26,7 +26,7 @@ import hu.klm60o.android.spiritrally2.presentation.news.components.NewsListConte
 import hu.klm60o.android.spiritrally2.useful.showToast
 
 @Composable
-fun NewsScreenComposable(viewModel: NewsViewModel = hiltViewModel(), innerPadding: PaddingValues) {
+fun NewsScreenComposable(viewModel: NewsViewModel = hiltViewModel()) {
     val context = LocalContext.current
     val newsResponse by viewModel.newsState.collectAsStateWithLifecycle()
 
@@ -38,18 +38,14 @@ fun NewsScreenComposable(viewModel: NewsViewModel = hiltViewModel(), innerPaddin
             .fillMaxWidth()
             .padding(5.dp)
     ) {
-        //val newsList = newsViewModel.itemList as List<News>
-        //NewsList(newsViewModel.itemList.value)
-        //Text("Ez itt a hírek képernyő")
-
         when (val newsResponse = newsResponse) {
             is Response.Idle -> {}
             is Response.Loading -> LoadingIndicator()
             is Response.Success -> newsResponse.data?.let { newsList ->
                 if (newsList.isEmpty()) {
-                    EmptyNewsListContent(innerPadding)
+                    EmptyNewsListContent()
                 } else {
-                    NewsListContent(innerPadding, newsList)
+                    NewsListContent(newsList)
                 }
             }
 
@@ -66,9 +62,7 @@ fun NewsScreenComposable(viewModel: NewsViewModel = hiltViewModel(), innerPaddin
 @Composable
 fun NewsPreview() {
     hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme {
-        NewsScreenComposable(
-            innerPadding = PaddingValues()
-        )
+        NewsScreenComposable()
     }
 }
 
@@ -76,8 +70,6 @@ fun NewsPreview() {
 @Composable
 fun NewsPreviewDark() {
     hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme(darkTheme = true) {
-        NewsScreenComposable(
-            innerPadding = PaddingValues()
-        )
+        NewsScreenComposable()
     }
 }
