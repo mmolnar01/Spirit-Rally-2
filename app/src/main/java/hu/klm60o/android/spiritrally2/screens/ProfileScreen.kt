@@ -36,7 +36,6 @@ import hu.klm60o.android.spiritrally2.useful.showToast
 
 @Composable
 fun ProfileScreenComposable(
-    navController: NavController,
     viewModel: UserDataViewModel = hiltViewModel(),
     checked: Boolean,
     onChecked: (Boolean) -> Unit

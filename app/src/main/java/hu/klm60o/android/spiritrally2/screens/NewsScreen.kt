@@ -26,69 +26,10 @@ import hu.klm60o.android.spiritrally2.presentation.news.components.NewsListConte
 import hu.klm60o.android.spiritrally2.useful.showToast
 
 @Composable
-fun NewsScreenComposable(navController: NavController, viewModel: NewsViewModel = hiltViewModel(), innerPadding: PaddingValues) {
+fun NewsScreenComposable(viewModel: NewsViewModel = hiltViewModel(), innerPadding: PaddingValues) {
     val context = LocalContext.current
     val newsResponse by viewModel.newsState.collectAsStateWithLifecycle()
 
-    /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        RequestNotificationPermissionDialog()
-    }
-    RequestCameraAndLocationPermissionDialog()
-
-    var locationRequest by rememberSaveable {
-        mutableStateOf<LocationRequest?>(null)
-    }
-
-    if (locationRequest != null) {
-        if (ActivityCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            SetUserLocation(locationRequest!!)
-        }
-    }
-
-    locationRequest = LocationRequest.Builder(Priority.PRIORITY_BALANCED_POWER_ACCURACY, 10000).build()
-    */
-    /*Scaffold(
-        bottomBar = { MyBottomAppbarComposable(navController) },
-        topBar = { MyTopAppBar() }
-    ) { innerPadding ->
-        Column(
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxHeight()
-                .fillMaxWidth()
-                .padding(innerPadding)
-        ) {
-            //val newsList = newsViewModel.itemList as List<News>
-            //NewsList(newsViewModel.itemList.value)
-            //Text("Ez itt a hírek képernyő")
-
-            when (val newsResponse = newsResponse) {
-                is Response.Idle -> {}
-                is Response.Loading -> LoadingIndicator()
-                is Response.Success -> newsResponse.data?.let { newsList ->
-                    if (newsList.isEmpty()) {
-                        EmptyNewsListContent(innerPadding)
-                    } else {
-                        NewsListContent(innerPadding, newsList)
-                    }
-                }
-
-                is Response.Failure -> newsResponse.e?.message?.let { errorMessage ->
-                    LaunchedEffect(errorMessage) {
-                        showToast(context, errorMessage)
-                    }
-                }
-            }
-        }
-    }*/
     Column(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -126,7 +67,6 @@ fun NewsScreenComposable(navController: NavController, viewModel: NewsViewModel 
 fun NewsPreview() {
     hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme {
         NewsScreenComposable(
-            navController = rememberNavController(),
             innerPadding = PaddingValues()
         )
     }
@@ -137,7 +77,6 @@ fun NewsPreview() {
 fun NewsPreviewDark() {
     hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme(darkTheme = true) {
         NewsScreenComposable(
-            navController = rememberNavController(),
             innerPadding = PaddingValues()
         )
     }

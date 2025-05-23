@@ -33,7 +33,7 @@ import java.util.Calendar
 
 
 @Composable
-fun ResultScreenComposable(navController: NavController, viewModel: RacepointsViewModel = hiltViewModel()) {
+fun ResultScreenComposable(viewModel: RacepointsViewModel = hiltViewModel()) {
     val context = LocalContext.current
     val racepointsResponse by viewModel.racepointsState.collectAsStateWithLifecycle()
     val editRacepointResponse by viewModel.editRacepointState.collectAsStateWithLifecycle()
@@ -100,9 +100,7 @@ fun ResultScreenComposable(navController: NavController, viewModel: RacepointsVi
 @Composable
 fun ResultPreview() {
     SpiritRally2Theme {
-        ResultScreenComposable(
-            navController = rememberNavController()
-        )
+        ResultScreenComposable()
     }
 }
 
@@ -110,8 +108,6 @@ fun ResultPreview() {
 @Composable
 fun ResultPreviewDark() {
     hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme(darkTheme = true) {
-        ResultScreenComposable(
-            navController = rememberNavController()
-        )
+        ResultScreenComposable()
     }
 }

@@ -88,7 +88,7 @@ fun SpiritRallyMainScreen() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NewsScreenComposable(navController = navController, innerPadding = innerPadding)
+                    NewsScreenComposable(innerPadding = innerPadding)
                 }
             }
             composable<MapScreen> {
@@ -96,7 +96,7 @@ fun SpiritRallyMainScreen() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MapScreenComposable(navController = navController, innerPadding = innerPadding)
+                    MapScreenComposable(innerPadding = innerPadding)
                 }
             }
             composable<ResultScreen> {
@@ -104,7 +104,7 @@ fun SpiritRallyMainScreen() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ResultScreenComposable(navController = navController)
+                    ResultScreenComposable()
                 }
             }
             composable<ProfileScreen> {
@@ -112,7 +112,7 @@ fun SpiritRallyMainScreen() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ProfileScreenComposable(navController = navController, checked = locationTrackingChecked) { locationTrackingChecked = it }
+                    ProfileScreenComposable(checked = locationTrackingChecked) { locationTrackingChecked = it }
                 }
             }
         }

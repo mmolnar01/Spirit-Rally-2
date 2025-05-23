@@ -10,21 +10,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
-import hu.klm60o.android.spiritrally2.screens.MapScreenComposable
-import hu.klm60o.android.spiritrally2.screens.NewsScreenComposable
-import hu.klm60o.android.spiritrally2.screens.ProfileScreenComposable
-import hu.klm60o.android.spiritrally2.screens.ResultScreenComposable
 import hu.klm60o.android.spiritrally2.screens.SpiritRallyMainScreen
 import hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme
 import hu.klm60o.android.spiritrally2.useful.showToast
-import kotlinx.serialization.Serializable
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -48,7 +40,7 @@ class MainActivity : ComponentActivity() {
                if (backPressedTime + 3000L > System.currentTimeMillis()){
                    finish()
                } else {
-                   showToast(this@MainActivity, "Nyomja meg újra a vissza gombot a kilépéshez")
+                   showToast(this@MainActivity, "Nyomd meg újra a vissza gombot a kilépéshez")
                }
                 backPressedTime = System.currentTimeMillis()
             }

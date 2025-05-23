@@ -8,12 +8,11 @@ import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import androidx.activity.ComponentActivity
-import androidx.compose.ui.platform.LocalContext
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.userProfileChangeRequest
-import org.osmdroid.util.GeoPoint
 import com.google.firebase.ktx.Firebase
 import io.ticofab.androidgpxparser.parser.GPXParser
+import org.osmdroid.util.GeoPoint
 import org.xmlpull.v1.XmlPullParserException
 import java.io.IOException
 import java.io.InputStream

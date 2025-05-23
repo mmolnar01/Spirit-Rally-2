@@ -2,22 +2,18 @@ package hu.klm60o.android.spiritrally2.screens
 
 import android.content.ContentValues.TAG
 import android.graphics.drawable.Drawable
-import android.nfc.Tag
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -29,40 +25,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.utsman.osmandcompose.CameraProperty
 import com.utsman.osmandcompose.CameraState
 import com.utsman.osmandcompose.Marker
 import com.utsman.osmandcompose.OpenStreetMap
 import com.utsman.osmandcompose.rememberMarkerState
 import hu.klm60o.android.spiritrally2.R
-import hu.klm60o.android.spiritrally2.components.LoadingIndicator
 import hu.klm60o.android.spiritrally2.domain.model.Response
 import hu.klm60o.android.spiritrally2.presentation.racepoints.RacepointsViewModel
-import hu.klm60o.android.spiritrally2.presentation.racepoints.components.EmptyRacepointListContent
-import hu.klm60o.android.spiritrally2.presentation.racepoints.components.RacepointListContent
 import hu.klm60o.android.spiritrally2.presentation.userdata.UserDataViewModel
-import hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme
-import hu.klm60o.android.spiritrally2.useful.getDistanceFromGeoPoints
-import hu.klm60o.android.spiritrally2.useful.getDistanceFromLatLonInKm
 import hu.klm60o.android.spiritrally2.useful.getGeoPointsFromGpx
 import hu.klm60o.android.spiritrally2.useful.showToast
-import io.ticofab.androidgpxparser.parser.GPXParser
 import org.osmdroid.util.GeoPoint
-import org.xmlpull.v1.XmlPullParserException
-import java.io.IOException
-import java.io.InputStream
 
 @Composable
 fun MapScreenComposable(
-    navController: NavController,
     racepointsViewModel: RacepointsViewModel = hiltViewModel(),
     userDataViewModel: UserDataViewModel = hiltViewModel(),
     innerPadding: PaddingValues
@@ -181,12 +163,23 @@ fun MapScreenComposable(
                                             modifier = Modifier
                                                 .size(100.dp)
                                                 .background(color = Color.Gray, shape = RoundedCornerShape(7.dp)),
-                                            verticalArrangement = Arrangement.Center,
                                             horizontalAlignment = Alignment.CenterHorizontally
                                         ) {
-                                            // setup content of info window
-                                            Text(text = it.title)
-                                            Text(text = it.snippet, fontSize = 10.sp)
+                                            Box(
+                                                modifier = Modifier
+                                                    .fillMaxSize()
+                                                    .padding(5.dp)
+                                            ) {
+                                                Text(text = "x", modifier = Modifier.align(Alignment.TopEnd))
+                                                Column(
+                                                    modifier = Modifier.align(Alignment.Center)
+                                                        .padding(0.dp, 5.dp, 0.dp, 0.dp),
+                                                    horizontalAlignment = Alignment.CenterHorizontally
+                                                ) {
+                                                    Text(it.title)
+                                                    Text(it.snippet)
+                                                }
+                                            }
                                         }
                                     }
                                     2 -> Marker(
@@ -199,12 +192,23 @@ fun MapScreenComposable(
                                             modifier = Modifier
                                                 .size(100.dp)
                                                 .background(color = Color.Gray, shape = RoundedCornerShape(7.dp)),
-                                            verticalArrangement = Arrangement.Center,
                                             horizontalAlignment = Alignment.CenterHorizontally
                                         ) {
-                                            // setup content of info window
-                                            Text(text = it.title)
-                                            Text(text = it.snippet, fontSize = 10.sp)
+                                            Box(
+                                                modifier = Modifier
+                                                    .fillMaxSize()
+                                                    .padding(5.dp)
+                                            ) {
+                                                Text(text = "x", modifier = Modifier.align(Alignment.TopEnd))
+                                                Column(
+                                                    modifier = Modifier.align(Alignment.Center)
+                                                        .padding(0.dp, 5.dp, 0.dp, 0.dp),
+                                                    horizontalAlignment = Alignment.CenterHorizontally
+                                                ) {
+                                                    Text(it.title)
+                                                    Text(it.snippet)
+                                                }
+                                            }
                                         }
                                     }
                                     3 -> Marker(
@@ -217,18 +221,23 @@ fun MapScreenComposable(
                                             modifier = Modifier
                                                 .size(100.dp)
                                                 .background(color = Color.Gray, shape = RoundedCornerShape(7.dp)),
-                                            verticalArrangement = Arrangement.Center,
                                             horizontalAlignment = Alignment.CenterHorizontally
                                         ) {
-                                            // setup content of info window
-                                            Row(
-                                                verticalAlignment = Alignment.Top,
-                                                horizontalArrangement = Arrangement.Start
+                                            Box(
+                                                modifier = Modifier
+                                                    .fillMaxSize()
+                                                    .padding(5.dp)
                                             ) {
-                                                Text("X")
+                                                Text(text = "x", modifier = Modifier.align(Alignment.TopEnd))
+                                                Column(
+                                                    modifier = Modifier.align(Alignment.Center)
+                                                        .padding(0.dp, 5.dp, 0.dp, 0.dp),
+                                                    horizontalAlignment = Alignment.CenterHorizontally
+                                                ) {
+                                                    Text(it.title)
+                                                    Text(it.snippet)
+                                                }
                                             }
-                                            Text(text = it.title)
-                                            Text(text = it.snippet, fontSize = 10.sp)
                                         }
                                     }
                                     4 -> Marker(
@@ -241,12 +250,23 @@ fun MapScreenComposable(
                                             modifier = Modifier
                                                 .size(100.dp)
                                                 .background(color = Color.Gray, shape = RoundedCornerShape(7.dp)),
-                                            verticalArrangement = Arrangement.Center,
                                             horizontalAlignment = Alignment.CenterHorizontally
                                         ) {
-                                            // setup content of info window
-                                            Text(text = it.title)
-                                            Text(text = it.snippet, fontSize = 10.sp)
+                                            Box(
+                                                modifier = Modifier
+                                                    .fillMaxSize()
+                                                    .padding(5.dp)
+                                            ) {
+                                                Text(text = "x", modifier = Modifier.align(Alignment.TopEnd))
+                                                Column(
+                                                    modifier = Modifier.align(Alignment.Center)
+                                                        .padding(0.dp, 5.dp, 0.dp, 0.dp),
+                                                    horizontalAlignment = Alignment.CenterHorizontally
+                                                ) {
+                                                    Text(it.title)
+                                                    Text(it.snippet)
+                                                }
+                                            }
                                         }
                                     }
                                 }
