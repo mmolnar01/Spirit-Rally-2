@@ -1,7 +1,6 @@
 package hu.klm60o.android.spiritrally2.screens
 
-import android.Manifest
-import android.content.pm.PackageManager
+import android.annotation.SuppressLint
 import android.os.Build
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -13,33 +12,33 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Switch
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import hu.klm60o.android.spiritrally2.permissions.RequestCameraAndLocationPermissionDialog
-import hu.klm60o.android.spiritrally2.permissions.RequestNotificationPermissionDialog
-import kotlinx.serialization.Serializable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.LocalContext
-import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.Priority
 import hu.klm60o.android.spiritrally2.navigation.NavigationItem
+import hu.klm60o.android.spiritrally2.permissions.RequestCameraAndLocationPermissionDialog
+import hu.klm60o.android.spiritrally2.permissions.RequestNotificationCameraLocationPermissionDialog
 import hu.klm60o.android.spiritrally2.presentation.userdata.components.SetUserLocation
-import hu.klm60o.android.spiritrally2.useful.showToast
+import kotlinx.serialization.Serializable
 
+//Main screen, amely tartalmazza a többi screent
+//A helyzet trackelése miatt szükséges, hogy mindig "képernyőn legyen"
+@SuppressLint("MissingPermission")
 @Composable
 fun SpiritRallyMainScreen() {
     val navController = rememberNavController()
     val context = LocalContext.current
     var locationTrackingChecked by rememberSaveable { mutableStateOf(false) }
+    var permissionsGranted by rememberSaveable { mutableStateOf(false) }
     val navigationItems = listOf(
         NavigationItem(
             title = "Hírek",
@@ -68,9 +67,10 @@ fun SpiritRallyMainScreen() {
     ) { innerPadding ->
         //Jogosultságok lekérdezése
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            RequestNotificationPermissionDialog()
+            RequestNotificationCameraLocationPermissionDialog(permissionsGranted) { permissionsGranted = it }
+        } else {
+            RequestCameraAndLocationPermissionDialog(permissionsGranted) { permissionsGranted = it }
         }
-        RequestCameraAndLocationPermissionDialog()
 
         var locationRequest by rememberSaveable {
             mutableStateOf<LocationRequest?>(null)
@@ -78,17 +78,8 @@ fun SpiritRallyMainScreen() {
 
         locationRequest = LocationRequest.Builder(Priority.PRIORITY_BALANCED_POWER_ACCURACY, 10000).build()
 
-        if (locationRequest != null && locationTrackingChecked) {
-            if (ActivityCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
-                SetUserLocation(locationRequest!!)
-            }
+        if (locationRequest != null && locationTrackingChecked && permissionsGranted) {
+            SetUserLocation(locationRequest!!)
         }
 
         NavHost(navController = navController, startDestination = NewsScreen, modifier = Modifier.padding(innerPadding)) {

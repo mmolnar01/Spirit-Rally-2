@@ -1,6 +1,9 @@
 package hu.klm60o.android.spiritrally2.permissions
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
+import android.provider.Settings
 import androidx.annotation.RequiresApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
@@ -14,6 +17,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
@@ -24,29 +28,58 @@ import hu.klm60o.android.spiritrally2.components.MyAlertDialog
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun RequestNotificationPermissionDialog() {
-    val permissionState = rememberPermissionState(permission = android.Manifest.permission.POST_NOTIFICATIONS)
-    //val test = rememberMultiplePermissionsState(permissions = listOf(android.Manifest.permission.POST_NOTIFICATIONS))
+fun RequestNotificationCameraLocationPermissionDialog(
+    granted: Boolean,
+    onGranted: (Boolean) -> Unit
+) {
+    val permissionsState = rememberMultiplePermissionsState(
+        listOf(
+            android.Manifest.permission.POST_NOTIFICATIONS,
+            android.Manifest.permission.ACCESS_FINE_LOCATION,
+            android.Manifest.permission.ACCESS_COARSE_LOCATION,
+            android.Manifest.permission.CAMERA
+        )
+    )
 
-    if (!permissionState.status.isGranted) {
-        if (permissionState.status.shouldShowRationale) {
+    if (permissionsState.allPermissionsGranted) {
+        onGranted
+    } else {
+        if (permissionsState.shouldShowRationale) {
             RationaleDialog()
         } else {
-            PermissionDialog { permissionState.launchPermissionRequest() }
+            PermissionDialog { permissionsState.launchMultiplePermissionRequest() }
         }
     }
+
+    /*if (!permissionsState.allPermissionsGranted) {
+        if (permissionsState.shouldShowRationale) {
+            RationaleDialog()
+        } else {
+            PermissionDialog { permissionsState.launchMultiplePermissionRequest() }
+        }
+    }*/
 }
 
 @Composable
 fun RationaleDialog() {
     var showWarningDialog by remember { mutableStateOf(true) }
+    val context = LocalContext.current
 
     if (showWarningDialog) {
         MyAlertDialog(
-            onConfirmation = { showWarningDialog = false},
+            onConfirmation = {
+                showWarningDialog = false
+
+                //Megnyitjuk a beállításokat
+                val intent = Intent(
+                    Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                    Uri.fromParts("package", context.packageName, null)
+                )
+                context.startActivity(intent)
+            },
             onDismissRequest = {},
             dialogTitle = "Jogosultság engedélyezése",
-            dialogText = "Kérem engedélyezze az Értesítés jogosultságokat a beállításokban",
+            dialogText = "Az alkalmazás nem működik jogosultságok nélkül. Kérlek engedélyezd: Kamera, helyzet, értesítések",
             icon = Icons.Filled.Info
         )
     }
