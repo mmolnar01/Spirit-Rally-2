@@ -17,5 +17,6 @@ Features:
 - Email authentication
 - Display event information
 - Send notification with FCM on new information
-- Display other competitors and personal progress on a map
+- Display other competitors' locations on a map
+- Display personal progress on a map
 - Log completion of race points with QR codes and Location
