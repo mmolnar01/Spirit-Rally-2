@@ -12,3 +12,10 @@ Used technologies and libraries:
 - osmdroid (https://github.com/osmdroid/osmdroid)
 - OpenStreetMap Android Compose (https://github.com/utsmannn/osm-android-compose)
 - Dagger Hilt
+
+Features:
+- Email authentication
+- Display event information
+- Send notification with FCM on new information
+- Display other competitors and personal progress on a map
+- Log completion of race points with QR codes and Location
