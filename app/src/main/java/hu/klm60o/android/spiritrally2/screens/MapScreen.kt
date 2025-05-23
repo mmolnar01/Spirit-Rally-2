@@ -15,7 +15,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -47,6 +49,7 @@ import hu.klm60o.android.spiritrally2.presentation.racepoints.RacepointsViewMode
 import hu.klm60o.android.spiritrally2.presentation.racepoints.components.EmptyRacepointListContent
 import hu.klm60o.android.spiritrally2.presentation.racepoints.components.RacepointListContent
 import hu.klm60o.android.spiritrally2.presentation.userdata.UserDataViewModel
+import hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme
 import hu.klm60o.android.spiritrally2.useful.getDistanceFromGeoPoints
 import hu.klm60o.android.spiritrally2.useful.getDistanceFromLatLonInKm
 import hu.klm60o.android.spiritrally2.useful.getGeoPointsFromGpx
@@ -170,23 +173,82 @@ fun MapScreenComposable(
                                 when (userData.category) {
                                     1 -> Marker(
                                         state = rememberMarkerState(geoPoint = GeoPoint(userData.location!!.latitude, userData.location!!.longitude)),
-                                        icon = carIcon
-                                    )
+                                        icon = carIcon,
+                                        title = "Rajtszám: " + userData.number.toString(),
+                                        snippet = "1: Autó"
+                                    ) {
+                                        Column(
+                                            modifier = Modifier
+                                                .size(100.dp)
+                                                .background(color = Color.Gray, shape = RoundedCornerShape(7.dp)),
+                                            verticalArrangement = Arrangement.Center,
+                                            horizontalAlignment = Alignment.CenterHorizontally
+                                        ) {
+                                            // setup content of info window
+                                            Text(text = it.title)
+                                            Text(text = it.snippet, fontSize = 10.sp)
+                                        }
+                                    }
                                     2 -> Marker(
                                         state = rememberMarkerState(geoPoint = GeoPoint(userData.location!!.latitude, userData.location!!.longitude)),
                                         icon = motorcycleIcon,
-                                        title = userData.number.toString()
-                                    )
+                                        title = "Rajtszám: " + userData.number.toString(),
+                                        snippet = "2: Motor"
+                                    ) {
+                                        Column(
+                                            modifier = Modifier
+                                                .size(100.dp)
+                                                .background(color = Color.Gray, shape = RoundedCornerShape(7.dp)),
+                                            verticalArrangement = Arrangement.Center,
+                                            horizontalAlignment = Alignment.CenterHorizontally
+                                        ) {
+                                            // setup content of info window
+                                            Text(text = it.title)
+                                            Text(text = it.snippet, fontSize = 10.sp)
+                                        }
+                                    }
                                     3 -> Marker(
                                         state = rememberMarkerState(geoPoint = GeoPoint(userData.location!!.latitude, userData.location!!.longitude)),
                                         icon = atvIcon,
-                                        title = userData.number.toString()
-                                    )
+                                        title = "Rajtszám: " + userData.number.toString(),
+                                        snippet = "3: ATV"
+                                    ) {
+                                        Column(
+                                            modifier = Modifier
+                                                .size(100.dp)
+                                                .background(color = Color.Gray, shape = RoundedCornerShape(7.dp)),
+                                            verticalArrangement = Arrangement.Center,
+                                            horizontalAlignment = Alignment.CenterHorizontally
+                                        ) {
+                                            // setup content of info window
+                                            Row(
+                                                verticalAlignment = Alignment.Top,
+                                                horizontalArrangement = Arrangement.Start
+                                            ) {
+                                                Text("X")
+                                            }
+                                            Text(text = it.title)
+                                            Text(text = it.snippet, fontSize = 10.sp)
+                                        }
+                                    }
                                     4 -> Marker(
                                         state = rememberMarkerState(geoPoint = GeoPoint(userData.location!!.latitude, userData.location!!.longitude)),
                                         icon = minimalIcon,
-                                        title = userData.number.toString()
-                                    )
+                                        title = "Rajtszám: " + userData.number.toString(),
+                                        snippet = "4: Minimál"
+                                    ) {
+                                        Column(
+                                            modifier = Modifier
+                                                .size(100.dp)
+                                                .background(color = Color.Gray, shape = RoundedCornerShape(7.dp)),
+                                            verticalArrangement = Arrangement.Center,
+                                            horizontalAlignment = Alignment.CenterHorizontally
+                                        ) {
+                                            // setup content of info window
+                                            Text(text = it.title)
+                                            Text(text = it.snippet, fontSize = 10.sp)
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -206,7 +268,7 @@ fun MapScreenComposable(
     }
 }
 
-@Preview(showBackground = true)
+/*@Preview(showBackground = true)
 @Composable
 fun MapPreview() {
     hu.klm60o.android.spiritrally2.ui.theme.SpiritRally2Theme {
@@ -226,4 +288,4 @@ fun MapPreviewDark() {
             innerPadding = PaddingValues()
         )
     }
-}
+}*/
