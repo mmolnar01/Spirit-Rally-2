@@ -1,6 +1,8 @@
 package hu.klm60o.android.spiritrally2.screens
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.os.Build
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -18,6 +20,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.core.app.ActivityCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -31,9 +35,9 @@ import kotlinx.serialization.Serializable
 
 //Main screen, amely tartalmazza a többi screent
 //A helyzet trackelése miatt szükséges, hogy mindig "képernyőn legyen"
-@SuppressLint("MissingPermission")
 @Composable
 fun SpiritRallyMainScreen() {
+    val context = LocalContext.current
     val navController = rememberNavController()
     var locationTrackingChecked by rememberSaveable { mutableStateOf(false) }
     var permissionsGranted by rememberSaveable { mutableStateOf(false) }
@@ -76,8 +80,17 @@ fun SpiritRallyMainScreen() {
 
         locationRequest = LocationRequest.Builder(Priority.PRIORITY_BALANCED_POWER_ACCURACY, 10000).build()
 
-        if (locationRequest != null && locationTrackingChecked && permissionsGranted) {
-            SetUserLocation(locationRequest!!)
+        if (locationRequest != null && locationTrackingChecked) {
+            if (ActivityCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                SetUserLocation(locationRequest!!)
+            }
         }
 
         NavHost(navController = navController, startDestination = NewsScreen, modifier = Modifier.padding(innerPadding)) {
