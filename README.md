@@ -39,8 +39,9 @@ Repository for the official Spirit Rally App (2nd edition)
 
 ### News:
 <p align="left">
-    <img src="https://github.com/user-attachments/assets/0105ebc2-7cd9-485b-aa78-b64445789473" alt="Results" width="300">
+    <img src="https://github.com/user-attachments/assets/d0c51368-b2a5-4422-8974-718df6cb0a25" alt="Results" width="300">
 </p>
+
 
 [1]: https://kotlinlang.org/
 [2]: https://github.com/journeyapps/zxing-android-embedded
